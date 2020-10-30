@@ -1,0 +1,44 @@
+header {
+  width: 100%;
+  box-shadow: 0 0.2rem 1rem $color-text-dark;
+  padding: 3.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: $color-primary;
+  color: $color-text-light;
+
+  .logo-wrapper {
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-wrapper {
+    .menu-container {
+      display: flex;
+
+      &__item {
+        padding: 0.8rem 1.6rem;
+        margin: 0 1.6rem;
+        border-bottom: 1px solid transparent;
+        cursor: pointer;
+        transition: border-bottom-color 0.2s;
+
+        &:hover {
+          border-bottom: 1px solid $color-text-light;
+        }
+
+        &--auth {
+          display: flex;
+        }
+      }
+
+      &__item-icon {
+        margin-left: 0.8rem;
+        font-size: 2.4rem;
+      }
+    }
+  }
+}
