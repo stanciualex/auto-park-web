@@ -12,7 +12,10 @@ async function loadAllRentals(setRentals, setError, setIsLoaded) {
             (result) => {
                 if (result)
                     setIsLoadedG(true);
-                setRentalsG(result.data);
+
+                if (result.success) {
+                    setRentalsG(result.data);
+                }
             },
             (error) => {
                 setIsLoadedG(true);
