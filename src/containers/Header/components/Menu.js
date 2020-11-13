@@ -6,6 +6,7 @@ const Menu = () => {
     return (
         <div className="menu-container">
             <MenuItem text="Home" to="/" />
+            <MenuItem text="Cars" to="/cars" />
             <MenuItem text="Rent requests" to="/requests" />
             <MenuItem text="Users" to="/users" />
             <AuthenticationButton/>
