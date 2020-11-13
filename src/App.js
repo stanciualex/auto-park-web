@@ -9,6 +9,7 @@ import Footer from "./containers/Footer/Footer";
 const App = () => {
   return (
       <div className="app-container">
+          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <BrowserRouter>
               <Header/>
               <Router/>
