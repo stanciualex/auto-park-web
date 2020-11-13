@@ -1,8 +1,9 @@
 import React from "react";
+import CarList from "../../containers/CarList/CarList";
 
 const CarsPage = () => {
     return (
-        <div>Cars</div>
+        <CarList/>
     );
 };
 
