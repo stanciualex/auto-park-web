@@ -6,7 +6,8 @@ import {
 import HomePage from "../../pages/home/HomePage";
 import CarsPage from "../../pages/cars/CarsPage";
 import UsersPage from "../../pages/users/UsersPage";
-import AdminRequests from "../AdminRequests/AdminRequests";
+import AdminRequests from "../../containers/AdminRequests/AdminRequests.js";
+
 
 const Router = () => {
     return (
