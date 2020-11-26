@@ -13,6 +13,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/alert'
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
+import config from '../../../config';
 
 const axios = require('axios').default
 
@@ -51,7 +52,7 @@ const RequestForm = (props) => {
             state: 'Requested',
             deleted: false
         };
-        axios.post('http://192.168.0.163:8000/rentals', request).then(function(response){
+        axios.post(`${config.API_URL}/rentals`, request).then(function(response){
             console.log(response);
             props.closeAction();
         }).catch(function(error){

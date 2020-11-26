@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import { Button, CardHeader, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import config from '../../config';
 
-const globUrl = "http://192.168.0.163:8000/rentals";
+const globUrl = `${config.API_URL}/rentals`;
 let setRentalsG, setErrorG, setIsLoadedG;
 async function loadAllRentals(setRentals, setError, setIsLoaded) {
         fetch(globUrl)
         .then(res => res.json())
         .then(
             (result) => {
-                if (result)
+                if (result && result.success !== false) {
                     setIsLoadedG(true);
-
-                if (result.success) {
                     setRentalsG(result.data);
                 }
             },

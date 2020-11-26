@@ -6,7 +6,7 @@ import Car from './components/Car'
 import Button from "@material-ui/core/Button";
 import Box from '@material-ui/core/Box'
 
-const baseUrl ='http://192.168.0.163:8000'
+const baseUrl ='http://localhost:8000'
 const carUrl = `${baseUrl}/cars`
 
 class CarList extends Component{
