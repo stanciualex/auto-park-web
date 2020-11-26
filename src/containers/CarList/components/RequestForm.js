@@ -8,7 +8,7 @@ import '@date-io/date-fns'
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import { makeStyles } from '@material-ui/core/styles';
-import MuiAlert from '@material-ui/lab/alert'
+import MuiAlert from '@material-ui/lab/alert';
 
 const axios = require('axios').default
 
@@ -47,7 +47,7 @@ const RequestForm = (props) => {
             state: 'Requested',
             deleted: false
         };
-        axios.post('http://192.168.0.163:8000/rentals', request).then(function(response){
+        axios.post(`${config.API_URL}/rentals`, request).then(function(response){
             console.log(response);
             props.closeAction();
         }).catch(function(error){

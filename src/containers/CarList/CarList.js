@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Car from './components/Car'
 import AddCar from "./components/AddCar";
 
-const baseUrl ='http://192.168.0.163:8000'
+const baseUrl ='http://localhost:8000'
 const carUrl = `${baseUrl}/cars`
 
 class CarList extends Component{
