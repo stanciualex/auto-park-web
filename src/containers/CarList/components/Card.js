@@ -10,18 +10,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CarCard = (props) => {
+
     var car = props.content;
     const classes = useStyles();
 
     return(
-            <Grid container direction="column" justify="center" alignItems="center" className={classes.control}>
-                <Typography class="modal-title">Vehicle details</Typography>
-                <Typography>License plate: {car.licencePlate}</Typography>
-                <Typography>Color: {car.color}</Typography>
-                <Typography>Engine: {car.engine}</Typography>
-                <Typography>Fabrication date: {car.fabricationDate}</Typography>
-            </Grid>
+        <Grid container direction="column" justify="center" alignItems="center" className={classes.control}>
+            <Typography className="modal-title">Vehicle details</Typography>
+            <Typography>License plate: {car.licencePlate}</Typography>
+            <Typography>Color: {car.color}</Typography>
+            <Typography>Engine: {car.engine}</Typography>
+            <Typography>Fabrication date: {car.fabricationDate}</Typography>
+        </Grid>
     )
 }
 
-export default CarCard
+export default CarCard;

@@ -55,7 +55,7 @@ const Car = (props) => {
             <Accordion expanded={expanded === id} onChange={handleChange(id)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Grid container direction="column" justify="space-around" alignItems="flex-start">
-                        <Typography class="carTypography">{car.manufacturer} {car.model}</Typography>
+                        <Typography variant="h5">{car.manufacturer} {car.model}</Typography>
                         <div className="div1">
                             <img src="https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/gallery_slide/public/images/car-reviews/first-drives/legacy/huracan-evo-.jpg?itok=jPfZUNel" width="160" height="80" alt="car_photo"/>
                         </div>
@@ -63,25 +63,22 @@ const Car = (props) => {
 
                 </AccordionSummary>
                 <AccordionDetails style={{justifyContent: 'center'}}>
-                        <Grid container direction="column" justify="center" alignItems="center">
-                            <CarCard content={car} />
-                            <Button variant="contained" color="primary" onClick={handleOpen}>Send request</Button>
-                        </Grid>
+                    <Grid container direction="column" justify="center" alignItems="center">
+                        <CarCard content={car} />
+                        <Button variant="contained" color="primary" onClick={handleOpen}>Send request</Button>
+                    </Grid>
 
-                        <Modal aria-labelled-by="transition-modal-title" aria-described-by="transition-modal-description" className={classes.modal} open={open} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop}
-                               BackdropProps={{
-                                timeout: 500,
-                            }}>
-                            <Fade in={open}>
-                                <div className={classes.paper}>
-                                    <RequestForm content={car} closeAction={handleClose}/>
-                                </div>
-                            </Fade>
-                        </Modal>
+                    <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
+                           BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>
+                        <Fade in={open}>
+                            <div className={classes.paper}>
+                                <RequestForm content={car} closeAction={handleClose}/>
+                            </div>
+                        </Fade>
+                    </Modal>
                 </AccordionDetails>
             </Accordion>
         </div>
-
     )
 }
 

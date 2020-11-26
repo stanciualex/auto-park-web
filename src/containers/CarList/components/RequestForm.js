@@ -8,6 +8,11 @@ import '@date-io/date-fns'
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import { makeStyles } from '@material-ui/core/styles';
+import * as https from "https";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/alert'
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
 
 const axios = require('axios').default
 
@@ -17,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const RequestForm = (props) => {
     var car = props.content;
@@ -54,10 +62,10 @@ const RequestForm = (props) => {
     return(
         <div>
             <Grid container direction="column" justify="center" alignItems="center">
-                <Typography class="modal-title">Request for {car.manufacturer} {car.model}</Typography>
+                <Typography className="modal-title">Request for {car.manufacturer} {car.model}</Typography>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select start date" value={selectedStartDate} onChange={handleStartDateChange} KeyboardButtonProps={{'aria-label': 'change date'}}/>
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select end date" value={selectedEndDate} onChange={handleEndDateChange} KeyboardButtonProps={{'aria-label': 'change date'}}/>
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select start date" value={selectedStartDate} onChange={handleStartDateChange} />
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select end date" value={selectedEndDate} onChange={handleEndDateChange} />
                 </MuiPickersUtilsProvider>
                 <TextField id="standard-basic" label="Reason" />
                 <Button className={classes.button} variant="contained" color="primary" endIcon={<Icon>send</Icon>} onClick={submitRequest}>Send request</Button>
