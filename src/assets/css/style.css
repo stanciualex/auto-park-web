@@ -1,0 +1,110 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #ebebeb;
+  min-height: 100vh;
+  font-size: 1.6rem; }
+
+a, a:hover, a:focus, a:active {
+  all: unset;
+  color: inherit; }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
+  .app-container .content {
+    flex-grow: 1; }
+
+header {
+  width: 100%;
+  box-shadow: 0 0.2rem 1rem #1f1f1f;
+  padding: 3.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: #1877D2;
+  color: #fafafa; }
+  header .logo-wrapper {
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center; }
+  header .menu-wrapper .menu-container {
+    display: flex; }
+    header .menu-wrapper .menu-container__item {
+      padding: 0.8rem 1.6rem;
+      margin: 0 1.6rem;
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+      transition: border-bottom-color 0.2s; }
+      header .menu-wrapper .menu-container__item:hover {
+        border-bottom: 1px solid #fafafa; }
+      header .menu-wrapper .menu-container__item--auth {
+        display: flex; }
+    header .menu-wrapper .menu-container__item-icon {
+      margin-left: 0.8rem;
+      font-size: 2.4rem; }
+
+footer {
+  background-color: #1a1a1a;
+  width: 100%;
+  padding: 1.6rem;
+  color: #fafafa;
+  text-align: center; }
+
+.carItem {
+  padding-top: 5px; }
+
+.carTypography {
+  font-size: 25px; }
+
+.modal {
+  background-color: white;
+  padding: 20%; }
+
+.image_divider {
+  align-content: center;
+  justify-content: center; }
+
+.acc-sum {
+  justify-content: center; }
+
+.div1 {
+  justify-content: center;
+  display: flex;
+  padding-left: 20px; }
+
+.details-text {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
+.modal-title {
+  font-size: larger;
+  align-content: center;
+  text-align: center; }
+
+.typoTitle {
+  font-size: larger;
+  align-content: center; }
+
+.filterTextField {
+  padding-top: 20px;
+  font-size: 20px; }
