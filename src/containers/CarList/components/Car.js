@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    accordionTitle: {
+        paddingLeft: '18px',
+    }
 }));
 
 const Car = (props) => {
@@ -55,9 +58,9 @@ const Car = (props) => {
             <Accordion expanded={expanded === id} onChange={handleChange(id)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Grid container direction="column" justify="space-around" alignItems="flex-start">
-                        <Typography variant="h5">{car.manufacturer} {car.model}</Typography>
+                        <Typography variant="h5" className={classes.accordionTitle}>{car.manufacturer} {car.model}</Typography>
                         <div className="div1">
-                            <img src="https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/gallery_slide/public/images/car-reviews/first-drives/legacy/huracan-evo-.jpg?itok=jPfZUNel" width="160" height="80" alt="car_photo"/>
+                            <img className="imag" src="https://www.downloadclipart.net/medium/car-transparent-background.png" width="160" height="80" alt="car_photo"/>
                         </div>
                     </Grid>
 
@@ -67,7 +70,6 @@ const Car = (props) => {
                         <CarCard content={car} />
                         <Button variant="contained" color="primary" onClick={handleOpen}>Send request</Button>
                     </Grid>
-
                     <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                            BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>
                         <Fade in={open}>
