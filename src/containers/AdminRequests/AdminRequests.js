@@ -1,10 +1,15 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import { Button, CardHeader, CardContent } from '@material-ui/core';
+import { Button, CardHeader, CardContent, TextField, Container} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import config from '../../config';
+import Car from '../CarList/components/Car';
+import { makeStyles } from '@material-ui/core/styles';
 
-const globUrl = `${config.API_URL}/rentals`;
+const serverUrl = `${config.API_URL}`;
+const rentalsGetAllURL = `${serverUrl}/rentals`;
+const usersGetAllURL = `${serverUrl}/users`;
+const carsGetAllURL = `${serverUrl}/cars`;
 
 
 
@@ -29,8 +34,17 @@ const waitingStyle = {
 }
 
 
-
 class AdminRequests extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cars: {},
+            rentals: {},
+            
+        };
+    }
+
+
     render () {
         return(
             <div className="rentals" style={mainStyle}>
@@ -50,7 +64,7 @@ class AdminRequests extends React.Component {
         )
     }
     async loadAllRentals() {
-            fetch(globUrl)
+            fetch(rentalsGetAllURL)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -59,16 +73,36 @@ class AdminRequests extends React.Component {
                         this.setState({
                             rentals: result.data
                         });
+                        this.loadCarsDetails();
+                        this.loadUsersDetails();
                     }
                 },
                 (error) => {
                     this.isLoaded = false;
                     this.error = error;
                 }
-            )
+            );
     }
+    loadUsersDetails() {}
+    loadCarsDetails() {
+        fetch(carsGetAllURL)
+        .then(res => res.json())
+        .then(
+            (res) => {
+                var cars = {};
+                for ( var i in res.data) {
+                    cars[res.data[i].id] = res.data[i];
+                    this.setState({cars: cars});
+                }
+            },
+            (res) => {
+                console.log("Could not load car details");
+            }
+        );
+    }
+
     async updateRental(rental) {
-        const response = await fetch(globUrl + '/' + rental.id, {
+        const response = await fetch(rentalsGetAllURL + '/' + rental.id, {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -142,8 +176,17 @@ class AdminRequests extends React.Component {
             rentalStyle = rejectedStyle;
             cardTitle = "Declined rental for " + cardTitle;
         }
-        
 
+        var carDetails = <div>Loading car details...</div>;
+        
+        if ( rental.carId in this.state.cars )
+            carDetails = <Car key={rental.carId} content={this.state.cars[rental.carId]}/>;
+        
+        let startDate = rental.startDate.split('T')[0];
+        let startTime = rental.startDate.split('T')[1].substring(0, 5);
+        let endDate = rental.endDate.split('T')[0];
+        let endTime = rental.endDate.split('T')[1].substring(0, 5);
+        
         return (
             <Card className="rental" key={rental.id} style={{...rentalStyle, ...cardStyle}}>
                 {/* TODO: Here we should render a separate component that handles car details.. */}
@@ -151,15 +194,48 @@ class AdminRequests extends React.Component {
                 </CardHeader>
 
                 <CardContent>
-                    <Typography component="h5" variant="h5">
-                        {rental.details}
-                    </Typography>
-                    <Typography component="h4" variant="h5">
-                        {rental.startDate}
-                    </Typography>
-                    <Typography component="h4" variant="h5">
-                        {rental.endDate}
-                    </Typography>
+                        <CardContent>
+                            {carDetails}
+                        </CardContent>
+                    <Card>
+                        <CardHeader>Rental Details</CardHeader>
+                            {rental.details}
+                    </Card>
+                    <Card style={{padding: 10 + 'px'}} >
+                        <TextField
+                            label="Start Date"
+                            type="date"
+                            defaultValue={startDate}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            label="Start Time"
+                            type="time"
+                            defaultValue={startTime}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <br/>
+                        <TextField
+                            label="End Date"
+                            type="date"
+                            defaultValue={endDate}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            label="End Time"
+                            type="time"
+                            defaultValue={endTime}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </Card>
                 </CardContent>
                 <CardContent>
                     {this.rentalButton(rental)}
