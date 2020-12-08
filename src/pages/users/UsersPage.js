@@ -1,9 +1,6 @@
 import React from "react";
+import UserList from "../../containers/UserList/UserList";
 
-const UsersPage = () => {
-    return (
-        <div>Users</div>
-    );
-};
+const UsersPage = () => ( <UserList/> );
 
 export default UsersPage;
