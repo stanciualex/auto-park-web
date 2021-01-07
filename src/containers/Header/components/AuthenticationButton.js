@@ -1,12 +1,14 @@
 import React from 'react';
 import PersonIcon from '@material-ui/icons/Person';
 import { connect } from 'react-redux';
+import { createBrowserHistory } from 'history';
 
 import {login as loginAction, logout as logoutAction} from '../../../redux/actions';
+import { Link } from 'react-router-dom';
 
 const AuthenticationButton = ({ isAuthenticated, user, login, logout }) => {
     const onLoginClick = () => {
-        login('test@test.com');
+        document.location.href = '/users/login';
     };
 
     const onLogoutClick = () => {
