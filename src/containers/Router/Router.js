@@ -7,6 +7,7 @@ import HomePage from "../../pages/home/HomePage";
 import CarsPage from "../../pages/cars/CarsPage";
 import UsersPage from "../../pages/users/UsersPage";
 import AdminRequests from "../../containers/AdminRequests/AdminRequests.js";
+import ProfilePage from "../../pages/profile/ProfilePage";
 
 
 const Router = () => {
@@ -16,6 +17,7 @@ const Router = () => {
             <Route exact path="/cars" component={CarsPage}/>
             <Route exact path="/users" component={UsersPage}/>
             <Route exact path="/requests" component={AdminRequests}/>
+            <Route exact path="/profile" component={ProfilePage} />
         </div>
     );
 };

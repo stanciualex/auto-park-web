@@ -26,6 +26,16 @@ a, a:hover, a:focus, a:active {
   all: unset;
   color: inherit; }
 
+.profile {
+  margin: 33px 100px 79px;
+  background-color: white;
+  border-radius: 4px; }
+
+.profile-component {
+  display: flex;
+  flex-direction: column;
+  margin: 50px; }
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -76,6 +86,9 @@ footer {
 .carTypography {
   font-size: 25px; }
 
+.car_typography {
+  font-size: 25px; }
+
 .modal {
   background-color: white;
   padding: 20%; }
@@ -108,3 +121,14 @@ footer {
 .filterTextField {
   padding-top: 20px;
   font-size: 20px; }
+
+.add-button {
+  padding-top: 70px; }
+
+.modalclass {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.imag {
+  background-color: transparent; }

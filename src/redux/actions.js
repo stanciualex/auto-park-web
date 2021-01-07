@@ -5,9 +5,11 @@ export const login = (email) => (dispatch) => {
         type: types.LOGIN,
         payload: {
             user: {
+                id: '2a160233-7e5a-46ff-b6c8-63b4c8396165',
                 email,
                 firstName: 'Test',
                 lastName: 'User',
+                jobTitle: 'Job Title',
             }
         }
     });

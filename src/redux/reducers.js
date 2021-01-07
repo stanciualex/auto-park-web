@@ -15,6 +15,8 @@ export const rootReducer = (state = initialState, action) => {
             return updateObject(state, action.payload);
         case types.LOGOUT:
             return updateObject(state, { user: null });
+        case types.UPLOAD:
+            return updateObject(state, action.payload);
         default:
             return state;
     }
