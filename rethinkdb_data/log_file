@@ -1,0 +1,8 @@
+2021-01-05T00:01:12.247524000 0.016243s notice: Recursively removing directory /Users/patriciaromaniuc/uni/proiect_colectiv/auto-park-web/rethinkdb_data/tmp
+2021-01-05T00:01:12.249396000 0.018118s notice: Initializing directory /Users/patriciaromaniuc/uni/proiect_colectiv/auto-park-web/rethinkdb_data
+2021-01-05T00:01:12.249494000 0.018212s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/patriciaromaniuc/uni/proiect_colectiv/auto-park-web/rethinkdb_data' did not already exist or is empty.)
+2021-01-05T00:01:12.249541000 0.018259s notice: Running rethinkdb 2.4.0 (CLANG 11.0.3 (clang-1103.0.32.62))...
+2021-01-05T00:01:12.256368000 0.025087s notice: Running on Darwin 19.6.0 x86_64
+2021-01-05T00:01:12.256435000 0.025154s notice: Loading data from directory /Users/patriciaromaniuc/uni/proiect_colectiv/auto-park-web/rethinkdb_data
+2021-01-05T00:01:12.318648000 0.087370s info: Automatically using cache size of 291 MB
+2021-01-05T00:01:12.319341000 0.088062s error: TCP socket creation failed for port 29015: Address already in use.
