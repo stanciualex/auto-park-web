@@ -1,3 +1,19 @@
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const UPLOAD = 'UPLOAD';
+/* LOGIN */
+export const LOGIN_PENDING = 'USER/LOGIN_PENDING';
+export const LOGIN_SUCCESS = 'USER/LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'USER/LOGIN_ERROR';
+
+/* GET USER BY ID */
+export const GET_BY_ID_PENDING = 'USER/GET_BY_ID_PENDING';
+export const GET_BY_ID_SUCCESS = 'USER/GET_BY_ID_SUCCESS';
+export const GET_BY_ID_ERROR = 'USER/GET_BY_ID_ERROR';
+
+/* LOGOUT */
+export const LOGOUT_PENDING = 'USER/LOGOUT_PENDING';
+export const LOGOUT_SUCCESS = 'USER/LOGOUT_SUCCESS';
+export const LOGOUT_ERROR = 'USER/LOGOUT_ERROR';
+
+/* UPDATE USER */
+export const UPDATE_PENDING = 'USER/UPDATE_PENDING';
+export const UPDATE_SUCCESS = 'USER/UPDATE_SUCCESS';
+export const UPDATE_ERROR = 'USER/UPDATE_ERROR';

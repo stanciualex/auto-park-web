@@ -56,7 +56,9 @@ header {
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
-    align-items: center; }
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 400; }
   header .menu-wrapper .menu-container {
     display: flex; }
     header .menu-wrapper .menu-container__item {
@@ -64,7 +66,8 @@ header {
       margin: 0 1.6rem;
       border-bottom: 1px solid transparent;
       cursor: pointer;
-      transition: border-bottom-color 0.2s; }
+      transition: border-bottom-color 0.2s;
+      font-size: 1.5rem; }
       header .menu-wrapper .menu-container__item:hover {
         border-bottom: 1px solid #fafafa; }
       header .menu-wrapper .menu-container__item--auth {

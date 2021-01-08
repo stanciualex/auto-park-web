@@ -13,6 +13,8 @@ header {
     cursor: pointer;
     display: flex;
     align-items: center;
+    font-size: 1.6rem;
+    font-weight: 400;
   }
 
   .menu-wrapper {
@@ -25,6 +27,7 @@ header {
         border-bottom: 1px solid transparent;
         cursor: pointer;
         transition: border-bottom-color 0.2s;
+        font-size: 1.5rem;
 
         &:hover {
           border-bottom: 1px solid $color-text-light;

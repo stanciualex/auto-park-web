@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import {connect} from "react-redux";
-import {login as loginAction, logout as logoutAction} from "../../redux/actions";
+import {login as loginAction, logout as logoutAction, update, update as updateAction} from "../../redux/actions";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -26,8 +26,10 @@ const ProfilePage = ({user, isAuthenticated}) => {
         if (user) {
             setFirstName(user.firstName);
             setLastName(user.lastName);
+            setJobTitle(user.jobTitle);
         }
     }, [user])
+
     const updateProfile = () => {
         const req = {
             email: user.email,
@@ -70,12 +72,15 @@ const ProfilePage = ({user, isAuthenticated}) => {
     );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+    console.log(state.user,'state.user')
+    return{
     isAuthenticated: !!state.user,
     user: state.user,
-});
+}};
 
 export default connect(mapStateToProps, {
     login: loginAction,
     logout: logoutAction,
+    update: updateAction,
 })(ProfilePage);
