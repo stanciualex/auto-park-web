@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 
 import Api from './api';
 import {
-     __login, __logout,
+     __login, __logout, __update, __upload
 } from './actionCreators';
 
 const history = createBrowserHistory();
@@ -31,6 +31,25 @@ export const login = (user) => (dispatch) => {
         }
     }).catch((error) => {
         dispatch(__login.error(error));
+    });
+};
+
+export const update = (user) => (dispatch) => {
+    dispatch(__update.pending());
+
+    Api.update(user).then((data) => {
+        dispatch(__update.success(data));
+    }).catch((error) => {
+        dispatch(__update.error(error))
+    });
+};
+
+export const upload = (files, context = '') => (dispatch) => {
+    dispatch(__upload.pending(context));
+    Api.uploadFile(files).then((data) => {
+        dispatch(__upload.success(data.files[0]));
+    }).catch((error) => {
+        dispatch(__upload.error(error));
     });
 };
 

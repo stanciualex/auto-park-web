@@ -39,6 +39,20 @@ export const rootReducer = (state = initialState, action) => {
             return updateObject(state, { auth: {user: null }});
         case types.LOGIN_ERROR:
             return updateObject(state, { auth: {errorMessage: 'Login failed! Wrong email or password!' }});
+        case types.UPDATE_SUCCESS:
+            localStorage.setItem('Auth', JSON.stringify(
+                {auth: {
+                        user: action.payload,
+                        errorMessage: '',
+                        loading: false,
+                        isAuthenticated: true,
+                        isAdmin: action.payload.role === 'admin'}
+                }));
+            return updateObject(state, {auth: {user: action.payload}});
+        case types.UPDATE_ERROR:
+            return updateObject(state, { auth: {errorMessage: 'Update failed!'} });
+        case types.UPLOAD_SUCCESS:
+            return updateObject(state, {auth: {user: { ...state.auth.user, picture: action.payload.path}}});
         default:
             return state;
     }

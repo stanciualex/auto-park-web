@@ -27,7 +27,7 @@ const UserList = () => {
     <Grid container direction="column" justify="center" alignItems="center">
       <AddUser refreshState={getUsers}/>
       <Container style={{ width: '60%' }}>
-        {users.map((user) => <User key={user.id} content={user}/>)}
+        {users && users.map((user) => <User key={user.id} content={user}/>)}
       </Container>
     </Grid>
   );

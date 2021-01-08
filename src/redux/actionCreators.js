@@ -18,6 +18,38 @@ export const __login = {
 };
 
 /**
+ * UPDATE
+ */
+export const __update = {
+    pending: () => ({
+        type: types.UPDATE_PENDING,
+    }),
+    success: (data) => ({
+        type: types.UPDATE_SUCCESS,
+        payload: data,
+    }),
+    error: (err) => ({
+        type: types.UPDATE_ERROR,
+        payload: err,
+    }),
+};
+
+export const __upload = {
+    pending: (context) => ({
+        type: types.UPLOAD_PENDING,
+        context,
+    }),
+    success: (data) => ({
+        type: types.UPLOAD_SUCCESS,
+        payload: data,
+    }),
+    error: (err) => ({
+        type: types.UPLOAD_ERROR,
+        payload: err,
+    }),
+};
+
+/**
  * LOGOUT
  */
 export const __logout = {
@@ -37,4 +69,6 @@ export const __logout = {
 export default {
     login: __login,
     logout: __logout,
+    update: __update,
+    upload: __upload,
 };

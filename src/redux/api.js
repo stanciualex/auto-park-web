@@ -20,6 +20,40 @@ const login = (user) => new Promise((resolve, reject) => {
         });
 });
 
+/**
+ * Update User
+ * @param email
+ * @returns {Promise}
+ */
+const update = (user) => new Promise((resolve, reject) => {
+    request
+        .put(`${API_HOST}/users/${user.id}`)
+        .send(user)
+        .end((err, res) => {
+            if (err) return reject(err);
+            if (res) {
+                if (!res.ok) return reject(res.body);
+                resolve(res.body);
+            }
+        });
+});
+
+const uploadFile = (files) => new Promise((resolve, reject) => {
+    request
+        .post(`${API_HOST}/file`)
+        .send(files)
+        .end((err, res) => {
+            if (err) return reject(err);
+            if (res) {
+                if (!res.ok) return reject(res.body);
+                resolve(res.body);
+            }
+            return null;
+        });
+});
+
 export default {
     login,
+    update,
+    uploadFile,
 };
