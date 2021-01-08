@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import {login as loginAction, logout as logoutAction} from '../../../redux/actions';
 import { Link } from 'react-router-dom';
 
-const AuthenticationButton = ({ isAuthenticated, user, login, logout }) => {
+const AuthenticationButton = ({ isAuthenticated, user, logout }) => {
     const onLoginClick = () => {
         document.location.href = '/users/login';
     };
@@ -31,8 +31,8 @@ const AuthenticationButton = ({ isAuthenticated, user, login, logout }) => {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.user,
-    user: state.user,
+    isAuthenticated: !!state.auth.user,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
