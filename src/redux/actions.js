@@ -25,7 +25,7 @@ export const login = (user) => (dispatch) => {
             date.setFullYear(date.getFullYear() + 1);
             document.cookie = `token=${token}; expires=${date.toString()}; path=/`;
             dispatch(__login.success(data));
-            history.push('/cars');
+            document.location.href = '/cars';
         } else {
             dispatch(__login.error(data));
         }
@@ -36,5 +36,5 @@ export const login = (user) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     dispatch(__logout.success());
-    history.push('/');
+    document.location.href = '/';
 };
