@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 
 import Api from './api';
 import {
-     __login, __logout, __update
+     __login, __logout, __update, __upload
 } from './actionCreators';
 
 const history = createBrowserHistory();
@@ -25,7 +25,7 @@ export const login = (user) => (dispatch) => {
             date.setFullYear(date.getFullYear() + 1);
             document.cookie = `token=${token}; expires=${date.toString()}; path=/`;
             dispatch(__login.success(data));
-            history.push('/cars');
+            document.location.href = '/cars';
         } else {
             dispatch(__login.error(data));
         }
@@ -44,7 +44,16 @@ export const update = (user) => (dispatch) => {
     });
 };
 
+export const upload = (files, context = '') => (dispatch) => {
+    dispatch(__upload.pending(context));
+    Api.uploadFile(files).then((data) => {
+        dispatch(__upload.success(data.files[0]));
+    }).catch((error) => {
+        dispatch(__upload.error(error));
+    });
+};
+
 export const logout = () => (dispatch) => {
     dispatch(__logout.success());
-    history.push('/');
+    document.location.href = '/';
 };

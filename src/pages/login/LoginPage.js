@@ -10,9 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
-import { login, logout } from '../../redux/actions';
+import { login } from '../../redux/actions';
 import { bindActionCreators } from 'redux';
-import state from '../../redux/reducers';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         fontSize: '20px',
+    },
+    error: {
+        color: 'red',
+        textAlign: 'center',
+        fontSize: '18px',
     }
 }));
 
@@ -164,7 +168,7 @@ const SignInSide = (props) => {
                         >
                            Login
                         </Button>
-                        <div>{ props.errorMessage ? <p>{props.errorMessage}</p> : null}</div>
+                        <div>{ props.errorMessage ? <p className={classes.error}>{props.errorMessage}</p> : null}</div>
                     </form>
                 </div>
             </Grid>
@@ -172,19 +176,14 @@ const SignInSide = (props) => {
     );
 }
 
-// const mapStateToProps = (state) => ({
-//     errorMessage: User.selectors.current(state).message,
-//     loading: User.selectors.current(state).loading,
-// });
-//
-// const mapStateToProps = (state) => ({
-//     errorMessage: User.selectors.current(state).message,
-//     loading: User.selectors.current(state).loading,
-// });
+const mapStateToProps = (state) => ({
+    errorMessage: state.auth.errorMessage,
+    loading: state.auth.loading,
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onLogin: login,
 }, dispatch);
 
 
-export default connect(null, mapDispatchToProps)(SignInSide);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInSide);

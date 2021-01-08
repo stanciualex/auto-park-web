@@ -36,12 +36,77 @@ a, a:hover, a:focus, a:active {
   flex-direction: column;
   margin: 50px; }
 
+.person-image {
+  text-align: center; }
+  .person-image__img {
+    border-radius: 10rem;
+    width: 10rem;
+    height: 10rem; }
+  .person-image__icon {
+    transform: translateY(-4rem);
+    margin-left: 7.2rem; }
+    .person-image__icon-background {
+      background-color: blue;
+      border: 2px solid white;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 10rem;
+      text-align: center; }
+    .person-image__icon img {
+      width: 1.3rem;
+      height: 1.3rem; }
+
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh; }
   .app-container .content {
     flex-grow: 1; }
+
+.modal-wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; }
+
+.modal-component {
+  background-color: white;
+  position: fixed;
+  width: 30%;
+  padding: 1.6rem;
+  left: 35%;
+  top: 35%; }
+
+.modal-title {
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #1877D2;
+  padding-bottom: 1.6rem; }
+
+.modal-content {
+  border: none; }
+  .modal-content input {
+    width: 100%;
+    height: 5.6rem;
+    background: grey;
+    border: 1px solid grey;
+    box-sizing: border-box;
+    border-radius: 0.4rem;
+    padding: 2.4rem; }
+  .modal-content__buy-document {
+    color: black; }
+
+.modal-buttons__save-button {
+  width: 30%;
+  text-align: center;
+  margin: unset; }
+
+.modal-buttons__cancel-button {
+  margin-left: 1rem; }
 
 header {
   width: 100%;

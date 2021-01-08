@@ -34,6 +34,21 @@ export const __update = {
     }),
 };
 
+export const __upload = {
+    pending: (context) => ({
+        type: types.UPLOAD_PENDING,
+        context,
+    }),
+    success: (data) => ({
+        type: types.UPLOAD_SUCCESS,
+        payload: data,
+    }),
+    error: (err) => ({
+        type: types.UPLOAD_ERROR,
+        payload: err,
+    }),
+};
+
 /**
  * LOGOUT
  */
@@ -55,4 +70,5 @@ export default {
     login: __login,
     logout: __logout,
     update: __update,
+    upload: __upload,
 };

@@ -9,3 +9,31 @@
   flex-direction: column;
   margin: 50px;
 }
+
+.person-image {
+  text-align: center;
+
+  &__img {
+    border-radius: 10rem;
+    width: 10rem;
+    height: 10rem;
+  }
+  &__icon {
+    transform: translateY(-4rem);
+    margin-left: 7.2rem;
+
+    &-background {
+      background-color: blue;
+      border: 2px solid white;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 10rem;
+      text-align: center;
+    }
+
+    img {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  }
+}
