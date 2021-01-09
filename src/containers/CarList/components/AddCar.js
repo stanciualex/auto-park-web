@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import Modal from "@material-ui/core/Modal";
 import {makeStyles} from "@material-ui/core/styles";
 import AddCarForm from "./AddCarForm";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -28,13 +29,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AddCar = (props) => {
+const AddCar = (user) => {
     const [open, setOpen] = React.useState(false)
     const classes = useStyles();
+
+    useEffect(() => {
+        console.log(user.user.role);
+    }, [user])
 
     const handleOpen = () => {
         setOpen(true);
     };
+
+    const isAdmin = () => {
+        return user.user.role == 'admin'
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -43,14 +52,14 @@ const AddCar = (props) => {
     return(
         <div>
             <Box p={2}>
-                <Button
+                {isAdmin && <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
                     onClick={() => {handleOpen()}}
                 >
                     Add new car
-                </Button>
+                </Button>}
             </Box>
             <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                    BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>
@@ -64,4 +73,9 @@ const AddCar = (props) => {
     )
 }
 
-export default AddCar;
+const mapStateToProps = (state) => ({
+        user: state.auth.user,
+    });
+
+
+export default connect(mapStateToProps)(AddCar);
