@@ -49,7 +49,7 @@ const User = (props) => {
                 <div className="div1">
                   <img className="imag" src="https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg" width="100" height="80" alt="car_photo"/>
                 </div>
-                <Typography variant="h5" className={classes.accordionTitle}>
+                <Typography variant="h3" className={classes.accordionTitle}>
                   {user.email}
                 </Typography>
               </div>

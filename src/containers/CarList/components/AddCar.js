@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
     accordionTitle: {
         paddingLeft: '18px',
+    },
+    button: {
+        fontSize: '20px',
+        padding: '15px 25px'
     }
 }));
 
@@ -39,7 +43,14 @@ const AddCar = (props) => {
     return(
         <div>
             <Box p={2}>
-                <Button variant="contained" color="primary" onClick={() => {handleOpen()}}>Add new car</Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={() => {handleOpen()}}
+                >
+                    Add new car
+                </Button>
             </Box>
             <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                    BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>

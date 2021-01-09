@@ -1,3 +1,24 @@
 .home {
+  text-align: center;
+  background-color: $color-ui-2;
+}
 
+.homeImage {
+  height: 100vh;
+}
+
+.homeTitle {
+  font-size: 80px;
+  position: absolute;
+  top: 170px;
+  left: 25%;
+  color: #fff;
+}
+
+.homeSubTitle {
+  font-size: 60px;
+  position: absolute;
+  top: 270px;
+  left: 25%;
+  color: #fff;
 }

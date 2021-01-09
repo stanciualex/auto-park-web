@@ -25,8 +25,11 @@ const UserList = () => {
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
-      <AddUser refreshState={getUsers}/>
-      <Container style={{ width: '60%' }}>
+      <div className="carsPageHeader">
+        <h1 className="carsPageTitle">Users</h1>
+        <AddUser refreshState={getUsers}/>
+      </div>
+      <Container className="mainContent">
         {users && users.map((user) => <User key={user.id} content={user}/>)}
       </Container>
     </Grid>

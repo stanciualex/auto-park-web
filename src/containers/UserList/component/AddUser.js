@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
   accordionTitle: {
     paddingLeft: '18px',
+  },
+  button: {
+    fontSize: '20px',
+    padding: '15px 25px'
   }
 }));
 
@@ -40,7 +44,12 @@ const AddUser = (props) => {
   return (
     <div>
       <Box p={2}>
-        <Button variant="contained" color="primary" onClick={handleOpenModal}>
+        <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={handleOpenModal}
+        >
           Invite user
         </Button>
       </Box>

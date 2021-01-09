@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     accordionTitle: {
         paddingLeft: '18px',
+        paddingTop: '22px'
     }
 }));
 
@@ -57,18 +58,18 @@ const Car = (props) => {
         <div className='carItem'>
             <Accordion expanded={expanded === id} onChange={handleChange(id)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Grid container direction="column" justify="space-around" alignItems="flex-start">
-                        <Typography variant="h5" className={classes.accordionTitle}>{car.manufacturer} {car.model}</Typography>
+                    <Grid container direction="row" alignItems="flex-start">
                         <div className="div1">
                             <img className="imag" src="https://www.downloadclipart.net/medium/car-transparent-background.png" width="160" height="80" alt="car_photo"/>
                         </div>
+                        <Typography variant="h3" className={classes.accordionTitle}>{car.manufacturer} {car.model}</Typography>
                     </Grid>
 
                 </AccordionSummary>
                 <AccordionDetails style={{justifyContent: 'center'}}>
                     <Grid container direction="column" justify="center" alignItems="center">
                         <CarCard content={car} />
-                        <Button variant="contained" color="primary" onClick={handleOpen}>Send request</Button>
+                        <Button variant="contained" color="primary" style={{ fontSize: '15px' }} onClick={handleOpen}>Send request</Button>
                     </Grid>
                     <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                            BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>

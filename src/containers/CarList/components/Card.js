@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
+    detailsTitle: {
+      fontSize: '25px'
+    },
+    text: {
+        fontSize: '20px'
+    }
 }));
 
 const CarCard = (props) => {
@@ -23,12 +29,12 @@ const CarCard = (props) => {
     return(
         <div>
             <Grid container direction="column" justify="center" alignItems="center" className={classes.control}>
-                <Typography variant="h5" className="modal-title">Vehicle details</Typography>
+                <Typography className={`modal-title ${classes.detailsTitle}`}>Vehicle details</Typography>
                 <Divider variant="middle"/>
-                <Typography>License plate: {car.licencePlate}</Typography>
-                <Typography>Color: {car.color}</Typography>
-                <Typography>Engine: {car.engine}</Typography>
-                <Typography>Fabrication date: {car.fabricationDate}</Typography>
+                <Typography className={classes.text}>License plate: {car.licencePlate}</Typography>
+                <Typography className={classes.text}>Color: {car.color}</Typography>
+                <Typography className={classes.text}>Engine: {car.engine}</Typography>
+                <Typography className={classes.text}>Fabrication date: {car.fabricationDate}</Typography>
             </Grid>
         </div>
     )

@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
+  detailsTitle: {
+    fontSize: '25px'
+  },
+  text: {
+    fontSize: '20px'
+  }
 }));
 
 const Card = (props) => {
@@ -22,26 +28,26 @@ const Card = (props) => {
   return (
       <div>
         <Grid container direction="column" justify="center" alignItems="center" className={classes.control}>
-          <Typography variant="h5" className="modal-title">
+          <Typography className={`modal-title ${classes.detailsTitle}`}>
             User details
           </Typography>
           <Divider variant="middle"/>
-          <Typography>
+          <Typography className={classes.text}>
             First Name: {user.firstName}
           </Typography>
-          <Typography>
+          <Typography className={classes.text}>
             Last Name: {user.lastName}
           </Typography>
-          <Typography>
+          <Typography className={classes.text}>
             Email: {user.email}
           </Typography>
-          <Typography>
+          <Typography className={classes.text}>
             Date Of Birth: {user.dateOfBirth}
           </Typography>
-          <Typography>
+          <Typography className={classes.text}>
             Job Title: {user.jobTitle}
           </Typography>
-          <Typography>
+          <Typography className={classes.text}>
             Role: {user.role}
           </Typography>
         </Grid>

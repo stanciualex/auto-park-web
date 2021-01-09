@@ -26,6 +26,27 @@ a, a:hover, a:focus, a:active {
   all: unset;
   color: inherit; }
 
+.home {
+  text-align: center;
+  background-color: #1a1a1a; }
+
+.homeImage {
+  height: 100vh; }
+
+.homeTitle {
+  font-size: 80px;
+  position: absolute;
+  top: 170px;
+  left: 25%;
+  color: #fff; }
+
+.homeSubTitle {
+  font-size: 60px;
+  position: absolute;
+  top: 270px;
+  left: 25%;
+  color: #fff; }
+
 .profile {
   margin: 33px 100px 79px;
   background-color: white;
@@ -56,12 +77,30 @@ a, a:hover, a:focus, a:active {
       width: 1.3rem;
       height: 1.3rem; }
 
+.mainContent {
+  width: 60%;
+  overflow: scroll;
+  height: 70vh; }
+
+.carsPageHeader {
+  width: 72%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.carsPageTitle {
+  font-size: 60px;
+  color: #3f51b5;
+  margin-left: 16px; }
+
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; }
+  overflow: hidden;
+  height: 100vh; }
   .app-container .content {
-    flex-grow: 1; }
+    flex-grow: 1;
+    overflow: hidden; }
 
 .modal-wrapper {
   background-color: rgba(0, 0, 0, 0.5);
@@ -146,7 +185,9 @@ footer {
   width: 100%;
   padding: 1.6rem;
   color: #fafafa;
-  text-align: center; }
+  text-align: center;
+  position: absolute;
+  bottom: 0; }
 
 .carItem {
   padding-top: 5px; }
@@ -178,9 +219,9 @@ footer {
   padding-bottom: 20px; }
 
 .modal-title {
-  font-size: larger;
   align-content: center;
-  text-align: center; }
+  text-align: center;
+  font-size: 25px; }
 
 .typoTitle {
   font-size: larger;

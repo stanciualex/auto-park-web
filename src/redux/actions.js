@@ -25,7 +25,11 @@ export const login = (user) => (dispatch) => {
             date.setFullYear(date.getFullYear() + 1);
             document.cookie = `token=${token}; expires=${date.toString()}; path=/`;
             dispatch(__login.success(data));
-            document.location.href = '/cars';
+            if (data.firstName && data.lastName) {
+                document.location.href = '/';
+            } else {
+                document.location.href = '/profile';
+            }
         } else {
             dispatch(__login.error(data));
         }

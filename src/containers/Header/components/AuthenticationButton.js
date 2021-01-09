@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const AuthenticationButton = ({ isAuthenticated, user, logout }) => {
     const onLoginClick = () => {
-        document.location.href = '/users/login';
+        document.location.href = '/login';
     };
 
     const onLogoutClick = () => {
@@ -21,7 +21,7 @@ const AuthenticationButton = ({ isAuthenticated, user, logout }) => {
             onClick={isAuthenticated ? onLogoutClick : onLoginClick}
         >
             {isAuthenticated ? (
-                <div>{`Hello, ${user.firstName} ${user.lastName}`} Logout</div>
+                <div>Logout</div>
             ) : (
                 <div>Login</div>
             )}
