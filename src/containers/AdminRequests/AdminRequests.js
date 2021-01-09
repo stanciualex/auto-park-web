@@ -51,7 +51,9 @@ async function updateRental(rental) {
 }
 
 const mainStyle = {
-    padding: "1em"
+    padding: "1em",
+    overflow: 'scroll',
+    height: '70vh'
 }
 
 const cardStyle = {
@@ -99,7 +101,7 @@ function renderRental(rental, index) {
         rentalStyle = rejectedStyle;
         cardTitle = "Declined rental for " + cardTitle;
     }
-    
+
 
     return (
         <Card className="rental" key={rental.id} style={{...rentalStyle, ...cardStyle}}>
