@@ -42,7 +42,7 @@ class CarList extends Component{
                     {this.props.user.role === 'admin' && <AddCar/>}
                 </div>
                 <Container className="mainContent">
-                    {this.state.cars.map((car) => <Car key={car.id} content={car}/>)}
+                    {this.state.cars && this.state.cars.map((car) => <Car key={car.id} content={car}/>)}
                 </Container>
             </Grid>
         )
