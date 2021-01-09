@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Divider from "@material-ui/core/Divider";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
     control:{
@@ -35,6 +36,8 @@ const CarCard = (props) => {
                 <Typography className={classes.text}>Color: {car.color}</Typography>
                 <Typography className={classes.text}>Engine: {car.engine}</Typography>
                 <Typography className={classes.text}>Fabrication date: {car.fabricationDate}</Typography>
+                {car.image && <Typography className={classes.text}><Link href={car.image}>View car photo</Link></Typography>}
+                {!car.image && <Typography className={classes.text}>This car has no image.</Typography>}
             </Grid>
         </div>
     )

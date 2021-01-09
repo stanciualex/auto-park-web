@@ -24,12 +24,12 @@ const AddCarForm = (props) => {
     const [insuranceDate, setInsuranceDate] = React.useState(Date.now())
     const [itpDate, setItpDate] = React.useState(Date.now())
     const [nextServiceDate, setNextServiceDate] = React.useState(Date.now())
-    const [selectedModel, setModel] = React.useState()
-    const [selectedManufacturer, setManufacturer] = React.useState()
-    const [selectedColor, setSelectedColor] = React.useState()
-    const [selectedEngine, setEngine] = React.useState()
-    const [selectedVin, setVin] = React.useState()
-    const [selectedLicensePlate, setLicensePlate] = React.useState()
+    const [model, setModel] = React.useState()
+    const [manufacturer, setManufacturer] = React.useState()
+    const [color, setColor] = React.useState()
+    const [engine, setEngine] = React.useState()
+    const [vin, setVin] = React.useState()
+    const [licensePlate, setLicensePlate] = React.useState()
     const [image, setImage] = React.useState()
 
     const handleFabricationDateChange = (date) => {
@@ -44,55 +44,27 @@ const AddCarForm = (props) => {
         setItpDate(date);
     }
 
-    const handleServiceDateChange = (date) => {
+    const handleNextServiceDateChange = (date) => {
         setNextServiceDate(date);
-    }
-
-    const handleManufacturerChange = (input) => {
-        setManufacturer(input);
-    }
-
-    const handleModelChange = (input) => {
-        setModel(input);
-    }
-
-    const handleEngineChange = (input) => {
-        setEngine(input);
-    }
-
-    const handleVinChange = (input) => {
-        setVin(input);
-    }
-
-    const handleColorChange = (color) => {
-        setSelectedColor(color);
-    }
-
-    const handleLicensePlateChage = (input) => {
-        setLicensePlate(input);
-    }
-
-    const handleImageChange = (input) => {
-        setImage(input);
     }
 
     const submitAddCar = () => {
         const req = {
-            color: "color",
+            color: color,
             deleted: false,
-            engine: "engine",
+            engine: engine,
             fabricationDate: fabricationDate,
-            image: "image_link",
+            image: image,
             insuranceValability: insuranceDate,
             itpValability: itpDate,
-            licencePlate: "licensePlate",
-            manufacturer: "manufacturer",
-            model: "model",
+            licencePlate: licensePlate,
+            manufacturer: manufacturer,
+            model: model,
             nextService: nextServiceDate,
-            vin: "vin",
+            vin: vin,
             image: image
         };
-        axios.post(API_URL + "/cars", req).then(function(response){
+        axios.post( "http://localhost:8000/cars", req).then(function(response){
             console.log(response);
             props.closeAction();
         }).catch(function(error){
@@ -104,21 +76,21 @@ const AddCarForm = (props) => {
         <div>
             <Grid container direction="column" justify="center" alignItems="center">
                 <Typography variant="h5">Add new car</Typography>
-                <TextField id="manuf" label="Manufacturer" onChange={handleManufacturerChange}/>
-                <TextField id="model" label="Model" onChange={handleModelChange}/>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select fabrication date" onChange={handleFabricationDateChange} />
+                <TextField id="manuf" label="Manufacturer" onChange={(event) => {setManufacturer(event.target.value)}}/>
+                <TextField id="model" label="Model" onChange={(event) => {setModel(event.target.value)}}/>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>                                                                                 
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select fabrication date" value={fabricationDate} onChange={handleFabricationDateChange} />
                 </MuiPickersUtilsProvider>
-                <TextField id="color" label="Color" onChange={handleColorChange}/>
-                <TextField id="engine" label="Engine" onChange={handleEngineChange}/>
+                <TextField id="color" label="Color" onChange={(event) => {setColor(event.target.value)}}/>
+                <TextField id="engine" label="Engine" onChange={(event) => {setEngine(event.target.value)}}/>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select insurance end date" onChange={handleInsuranceDateChange} />
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select ITP end valability date" onChange={handleItpDateChange} />
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select next service date" onChange={handleServiceDateChange} />
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select insurance end date" value={insuranceDate} onChange={handleInsuranceDateChange} />
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select ITP end valability date" value={itpDate} onChange={handleItpDateChange} />
+                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select next service date" value={nextServiceDate} onChange={handleNextServiceDateChange} />
                 </MuiPickersUtilsProvider>
-                <TextField id="licenseplate" label="License plate" onChange={handleLicensePlateChage}/>
-                <TextField id="vin" label="VIN" onChange={handleVinChange}/>
-                <TextField id="image" label="Image link" onChange={handleImageChange}/>
+                <TextField id="licenseplate" label="License plate" onChange={(event) => {setLicensePlate(event.target.value)}}/>
+                <TextField id="vin" label="VIN" onChange={(event) => {setVin(event.target.value)}}/>
+                <TextField id="image" label="Image link" onChange={(event) => {setImage(event.target.value)}}/>
                 <Button className={classes.button} variant="contained" color="primary" endIcon={<Icon>add</Icon>} onClick={submitAddCar}>Add car</Button>
                 <Button className={classes.button} variant="contained" color="secondary" onClick={props.closeAction}>Cancel</Button>
             </Grid>
