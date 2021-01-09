@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import UserCard from './Card';
+import config from "../../../config";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -36,6 +37,10 @@ const User = (props) => {
   const id = props.content.id;
   const user = props.content;
 
+  const userPicture = user.picture
+      ? `${config.API_URL}/file/${user.picture}`
+      : "https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg";
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -47,7 +52,7 @@ const User = (props) => {
             <Grid container direction="column" justify="space-around" alignItems="flex-start">
               <div className={classes.titleWrapper}>
                 <div className="div1">
-                  <img className="imag" src="https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg" width="100" height="80" alt="car_photo"/>
+                  <img className="imag" src={userPicture} width="100" height="80" alt="user_picture"/>
                 </div>
                 <Typography variant="h3" className={classes.accordionTitle}>
                   {user.email}

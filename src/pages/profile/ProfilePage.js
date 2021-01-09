@@ -68,7 +68,6 @@ const ProfilePage = ({user, isAuthenticated, update, upload, file}) => {
         }
     }, [file])
 
-    console.log('picture', picture);
     return (
         <div className="profile">
             <Grid container direction="column" justify="center" alignItems="center">
