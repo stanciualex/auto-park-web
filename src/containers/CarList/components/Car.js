@@ -13,6 +13,7 @@ import Fade from "@material-ui/core/Fade";
 import RequestForm from "./RequestForm";
 import '@date-io/date-fns'
 import Grid from "@material-ui/core/Grid";
+import API_URL from '../../../config';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -54,13 +55,17 @@ const Car = (props) => {
     const id = props.content.id;
     const car = props.content;
 
+    const carPicture = car.image
+      ? car.image
+      : "https://ci.catcar.info/opel_2015_05/data/NO_IMAGE12.jpg";
+
     return(
         <div className='carItem'>
             <Accordion expanded={expanded === id} onChange={handleChange(id)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Grid container direction="row" alignItems="flex-start">
                         <div className="div1">
-                            <img className="imag" src="https://www.downloadclipart.net/medium/car-transparent-background.png" width="160" height="80" alt="car_photo"/>
+                            <img className="imag" src={carPicture} width="160" height="80" alt="car_photo"/>
                         </div>
                         <Typography variant="h3" className={classes.accordionTitle}>{car.manufacturer} {car.model}</Typography>
                     </Grid>

@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Grid from "@material-ui/core/Grid";
+import API_URL from "../../../config";
 
 const axios = require('axios').default
 
@@ -29,6 +30,7 @@ const AddCarForm = (props) => {
     const [selectedEngine, setEngine] = React.useState()
     const [selectedVin, setVin] = React.useState()
     const [selectedLicensePlate, setLicensePlate] = React.useState()
+    const [image, setImage] = React.useState()
 
     const handleFabricationDateChange = (date) => {
         setFabricationDate(date);
@@ -70,6 +72,10 @@ const AddCarForm = (props) => {
         setLicensePlate(input);
     }
 
+    const handleImageChange = (input) => {
+        setImage(input);
+    }
+
     const submitAddCar = () => {
         const req = {
             color: "color",
@@ -84,8 +90,9 @@ const AddCarForm = (props) => {
             model: "model",
             nextService: nextServiceDate,
             vin: "vin",
+            image: image
         };
-        axios.post('http://192.168.0.163:8000/cars', req).then(function(response){
+        axios.post(API_URL + "/cars", req).then(function(response){
             console.log(response);
             props.closeAction();
         }).catch(function(error){
@@ -111,6 +118,7 @@ const AddCarForm = (props) => {
                 </MuiPickersUtilsProvider>
                 <TextField id="licenseplate" label="License plate" onChange={handleLicensePlateChage}/>
                 <TextField id="vin" label="VIN" onChange={handleVinChange}/>
+                <TextField id="image" label="Image link" onChange={handleImageChange}/>
                 <Button className={classes.button} variant="contained" color="primary" endIcon={<Icon>add</Icon>} onClick={submitAddCar}>Add car</Button>
                 <Button className={classes.button} variant="contained" color="secondary" onClick={props.closeAction}>Cancel</Button>
             </Grid>
