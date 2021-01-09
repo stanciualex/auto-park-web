@@ -29,6 +29,7 @@ const RequestForm = (props) => {
 
     const [selectedStartDate, setSelectedStartDate] = React.useState(Date.now());
     const [selectedEndDate, setSelectedEndDate] = React.useState(Date.now())
+    const [selectedReason, setSelectedReason] = React.useState(null)
 
     const handleStartDateChange = (date) => {
         setSelectedStartDate(date)
@@ -44,8 +45,8 @@ const RequestForm = (props) => {
             userId: '1',
             startDate: selectedStartDate,
             endDate: selectedEndDate,
-            details: 'Reason',
-            state: 'Requested',
+            details: selectedReason,
+            state: 'requested',
             deleted: false
         };
         axios.post(`${config.API_URL}/rentals`, request).then(function(response){
@@ -64,7 +65,7 @@ const RequestForm = (props) => {
                     <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select start date" value={selectedStartDate} onChange={handleStartDateChange} />
                     <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select end date" value={selectedEndDate} onChange={handleEndDateChange} />
                 </MuiPickersUtilsProvider>
-                <TextField id="standard-basic" label="Reason" />
+                <TextField id="standard-basic" label="Reason" value={selectedReason} onChange={(event) => {setSelectedReason(event.target.value)}} />
                 <Button className={classes.button} variant="contained" color="primary" endIcon={<Icon>send</Icon>} onClick={submitRequest}>Send request</Button>
                 <Button className={classes.button} variant="contained" color="secondary" onClick={props.closeAction}>Cancel</Button>
             </Grid>
