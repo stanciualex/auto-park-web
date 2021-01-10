@@ -162,7 +162,6 @@ const ProfilePage = ({user, isAuthenticated, update, upload, file}) => {
                                     required
                                     defaultValue={user.jobTitle}
                                     InputProps={{
-                                        readOnly: true,
                                         classes: {
                                             input: classes.resize,
                                         }
