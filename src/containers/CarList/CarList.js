@@ -16,7 +16,7 @@ import {useEffect} from 'react'
 const CarList = (user) => {
 
     const [cars, setCars] = React.useState();
-    const [search, setSearch] = React.useState();
+    const [search, setSearch] = React.useState('');
 
     useEffect(() => {
         getCars();
@@ -39,9 +39,8 @@ const CarList = (user) => {
     }
 
     const onSearchChange = (event) => {
-        const { value } = event.target;
-
-        setSearch(value);
+        setSearch(event.target.value);
+        setCars(applyFilters(cars));
     }
 
     const applyFilters = (cars) => {
@@ -49,15 +48,17 @@ const CarList = (user) => {
             return [];
         }
 
-        const search = search.toLowerCase();
+        let s = search;
 
-        if (!search) {
+        const sl = s.toLowerCase();
+
+        if (!sl) {
             return cars;
         }
 
         return cars.filter(car => {
             const searchTerm = `${car.manufacturer} ${car.model} ${car.color} ${car.engine} ${car.licencePlate}`.toLowerCase();
-            return searchTerm.includes(search);
+            return searchTerm.includes(sl);
         });
     }
 
@@ -83,7 +84,7 @@ const CarList = (user) => {
                     />
 
             <Container className="mainContent">
-                {cars && cars.map((car) => <Car key={car.id} content={car} onRemove={handleDelete}/>)}
+                {cars && applyFilters(cars).map((car) => <Car key={car.id} content={car} onRemove={handleDelete}/>)}
             </Container>
         </Grid>
     )
