@@ -15,8 +15,26 @@ const axios = require('axios').default
 
 const useStyles = makeStyles((theme) => ({
     button: {
+        fontSize: 15,
         margin: theme.spacing(1),
     },
+    resize:{
+        fontSize: 20
+    },
+    footer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    label: {
+        marginRight: 20
+    },
+    wrapper: {
+        width:'100%',
+        display: "flex",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 20
+    }
 }));
 
 function Alert(props) {
@@ -61,13 +79,77 @@ const RequestForm = (props) => {
         <div>
             <Grid container direction="column" justify="center" alignItems="center">
                 <Typography className="modal-title">Request for {car.manufacturer} {car.model}</Typography>
+
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select start date" value={selectedStartDate} onChange={handleStartDateChange} />
-                    <KeyboardDatePicker disableToolbar variant="inline" format="MM/dd/yyyy" margin="normal" label="Select end date" value={selectedEndDate} onChange={handleEndDateChange} />
+                    <div className={classes.wrapper}>
+                        <h3 className={classes.label}>Select start date: </h3>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="normal"
+                            value={selectedStartDate}
+                            onChange={handleStartDateChange}
+                            InputProps={{
+                                classes: {
+                                    input: classes.resize,
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className={classes.wrapper}>
+                        <h3 className={classes.label}>Select end date: </h3>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="normal"
+                            value={selectedEndDate}
+                            onChange={handleEndDateChange}
+                            InputProps={{
+                                classes: {
+                                    input: classes.resize,
+                                }
+                            }}
+                        />
+                    </div>
                 </MuiPickersUtilsProvider>
-                <TextField id="standard-basic" label="Reason" value={selectedReason} onChange={(event) => {setSelectedReason(event.target.value)}} />
-                <Button className={classes.button} variant="contained" color="primary" endIcon={<Icon>send</Icon>} onClick={submitRequest}>Send request</Button>
-                <Button className={classes.button} variant="contained" color="secondary" onClick={props.closeAction}>Cancel</Button>
+
+                <div className={classes.wrapper}>
+                    <h3 className={classes.label}>Reason: </h3>
+                    <TextField
+                        id="standard-basic"
+                        value={selectedReason}
+                        InputProps={{
+                            classes: {
+                                input: classes.resize,
+                            }
+                        }}
+                        className={classes.textField}
+                        onChange={(event) => {setSelectedReason(event.target.value)}}
+                    />
+                </div>
+
+                <div className={classes.footer}>
+                    <Button
+                        className={classes.button}
+                        variant="contained"
+                        color="secondary"
+                        onClick={props.closeAction}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        className={classes.button}
+                        variant="contained"
+                        color="primary"
+                        endIcon={<Icon>send</Icon>}
+                        onClick={submitRequest}
+                    >
+                        Send request
+                    </Button>
+                </div>
             </Grid>
         </div>
     )
