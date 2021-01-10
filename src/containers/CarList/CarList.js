@@ -9,49 +9,48 @@ import {connect} from "react-redux";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Search} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
+import config from '../../config'
+import {useEffect} from 'react'
 
-const baseUrl ='http://localhost:8000'
-const carUrl = `${baseUrl}/cars`
 
-class CarList extends Component{
+const CarList = (user) => {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            cars: [],
-            search: '',
-        }
-    }
+    const [cars, setCars] = React.useState();
+    const [search, setSearch] = React.useState();
 
-    getCars(){
-        axios.get(carUrl)
+    useEffect(() => {
+        getCars();
+    })
+
+    const getCars = () => {
+        axios.get(`${config.API_URL}/cars`)
             .then(response => {
-                this.setState({cars: response.data.data})
+                setCars(response.data.data)
             })
             .catch(error => console.log(error))
     }
 
-    componentDidMount() {
-        this.getCars()
-    }
-
-    handleAddCar(){
-    }
-
-    onSearchChange = (event) => {
-        const { value } = event.target;
-
-        this.setState({
-            search: value,
+    const handleDelete = (id) => {
+        axios.delete( `${config.API_URL}/cars/${id}`, null).then(function(response){
+            console.log(response);
+        }).catch(function(error){
+            console.log(error);
         })
     }
 
-    applyFilters(cars) {
+    const onSearchChange = (event) => {
+        const { value } = event.target;
+
+        setSearch(value);
+        applyFilters(cars);
+    }
+
+    const applyFilters = (cars) => {
         if (!cars) {
             return [];
         }
 
-        const search = this.state.search.toLowerCase();
+        const search = search.toLowerCase();
 
         if (!search) {
             return cars;
@@ -59,19 +58,18 @@ class CarList extends Component{
 
         return cars.filter(car => {
             const searchTerm = `${car.manufacturer} ${car.model} ${car.color} ${car.engine} ${car.licencePlate}`.toLowerCase();
-
             return searchTerm.includes(search);
         });
     }
 
-    render(){
-        const cars = this.applyFilters(this.state.cars);
+    return(
+        <Grid container direction="column" justify="center" alignItems="center">
+            <div className="carsPageHeader">
+                <h1 className="carsPageTitle">Cars</h1>
+                {user.user.role === 'admin' && <AddCar/>}
+            </div>
 
-        return(
-            <Grid container direction="column" justify="center" alignItems="center">
-                <div className="carsPageHeader">
-                    <h1 className="carsPageTitle">Cars</h1>
-                    <TextField
+            <TextField
                         id="input-with-icon-textfield"
                         placeholder="Search..."
                         InputProps={{
@@ -81,18 +79,15 @@ class CarList extends Component{
                                 </InputAdornment>
                             ),
                         }}
-                        onChange={this.onSearchChange}
-                        value={this.state.search}
+                        onChange={onSearchChange}
+                        value={search}
                     />
-                    {this.props.user.role === 'admin' && <AddCar/>}
-                </div>
-                <Container className="mainContent">
-                    {cars.map((car) => <Car key={car.id} content={car}/>)}
-                    {cars.length === 0 && <div>Empty cars list.</div>}
-                </Container>
-            </Grid>
-        )
-    }
+
+            <Container className="mainContent">
+                {cars && cars.map((car) => <Car key={car.id} content={car} onRemove={handleDelete}/>)}
+            </Container>
+        </Grid>
+    )
 }
 
 const mapStateToProps = (state) => ({

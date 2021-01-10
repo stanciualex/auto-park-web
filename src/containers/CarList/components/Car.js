@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -13,7 +13,10 @@ import Fade from "@material-ui/core/Fade";
 import RequestForm from "./RequestForm";
 import '@date-io/date-fns'
 import Grid from "@material-ui/core/Grid";
-import API_URL from '../../../config';
+import config from '../../../config';
+import {connect} from "react-redux";
+
+const axios = require('axios').default
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -74,7 +77,8 @@ const Car = (props) => {
                 <AccordionDetails style={{justifyContent: 'center'}}>
                     <Grid container direction="column" justify="center" alignItems="center">
                         <CarCard content={car} />
-                        <Button variant="contained" color="primary" style={{ fontSize: '15px' }} onClick={handleOpen}>Send request</Button>
+                        {props.user.role === 'user' && <Button variant="contained" color="primary" style={{ fontSize: '15px' }} onClick={handleOpen}>Send request</Button>}
+                        {props.user.role === 'admin' && <Button variant="contained" color="secondary" style={{fontSize: '15px'}} onClick={() => props.onRemove(car.id)}>Delete car</Button>}
                     </Grid>
                     <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                            BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>
@@ -90,4 +94,8 @@ const Car = (props) => {
     )
 }
 
-export default Car
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Car);
