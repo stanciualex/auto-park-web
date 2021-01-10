@@ -16,8 +16,22 @@ const axios = require('axios').default
 
 const useStyles = makeStyles((theme) => ({
     button: {
+        fontSize: 15,
         margin: theme.spacing(1),
     },
+    resize:{
+        fontSize: 20
+    },
+    label: {
+        marginRight: 20
+    },
+    wrapper: {
+        width:'100%',
+        display: "flex",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 20
+    }
 }));
 
 const ProfilePage = ({user, isAuthenticated, update, upload, file}) => {
@@ -91,28 +105,84 @@ const ProfilePage = ({user, isAuthenticated, update, upload, file}) => {
                                 </div>
                             </div>
                         </div>
-                        <TextField required id="standard-required" style={{margin: "20px 0", width: "250px"}} label="First Name" defaultValue={user.firstName} onChange={(event) => {setFirstName(event.target.value)}} />
-                        <TextField required id="standard-required" style={{margin: "20px 0"}} label="Last Name" defaultValue={user.lastName} onChange={(event) => {setLastName(event.target.value)}} />
-                        <TextField
-                            id="standard-read-only-input"
-                            label="Email"
-                            defaultValue={user.email}
-                            style={{margin: "20px 0"}}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        <TextField required id="standard-required" style={{margin: "20px 0"}} label="Job Title" defaultValue={user.jobTitle} onChange={(event) => {setJobTitle(event.target.value)}} />
-                        <Button className={classes.button} variant="contained" color="primary" onClick={updateProfile}>Update Profile</Button>
-                        {
-                            showSavePopUp
-                            && (
-                                <Modal
-                                    title="Your profile was successfully updated!"
-                                    onClose={() => setShowSavePopUp(false)}
+                        <div>
+                            <div className={classes.wrapper}>
+                                <h3 className={classes.label}>First Name: </h3>
+                                <TextField
+                                    id="standard-required"
+                                    required
+                                    defaultValue={user.firstName}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.resize,
+                                        }
+                                    }}
+                                    className={classes.textField}
+                                    onChange={(event) => {setFirstName(event.target.value)}}
                                 />
-                            )
-                        }
+                            </div>
+
+                            <div className={classes.wrapper}>
+                                <h3 className={classes.label}>Last Name: </h3>
+                                <TextField
+                                    id="standard-required"
+                                    required
+                                    defaultValue={user.lastName}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.resize,
+                                        }
+                                    }}
+                                    className={classes.textField}
+                                    onChange={(event) => {setLastName(event.target.value)}}
+                                />
+                            </div>
+
+                            <div className={classes.wrapper}>
+                                <h3 className={classes.label}>Email: </h3>
+                                <TextField
+                                    id="standard-required"
+                                    required
+                                    defaultValue={user.email}
+                                    InputProps={{
+                                        readOnly: true,
+                                        classes: {
+                                            input: classes.resize,
+                                        }
+                                    }}
+                                    className={classes.textField}
+                                    onChange={(event) => {setLastName(event.target.value)}}
+                                />
+                            </div>
+
+                            <div className={classes.wrapper}>
+                                <h3 className={classes.label}>Job Title: </h3>
+                                <TextField
+                                    id="standard-required"
+                                    required
+                                    defaultValue={user.jobTitle}
+                                    InputProps={{
+                                        readOnly: true,
+                                        classes: {
+                                            input: classes.resize,
+                                        }
+                                    }}
+                                    className={classes.textField}
+                                    onChange={(event) => {setJobTitle(event.target.value)}}
+                                />
+                            </div>
+
+                            <Button className={classes.button} variant="contained" color="primary" onClick={updateProfile}>Update Profile</Button>
+                            {
+                                showSavePopUp
+                                && (
+                                    <Modal
+                                        title="Your profile was successfully updated!"
+                                        onClose={() => setShowSavePopUp(false)}
+                                    />
+                                )
+                            }
+                        </div>
                     </div>
                 ) : (
                     <div className="profile-component">Please log in</div>

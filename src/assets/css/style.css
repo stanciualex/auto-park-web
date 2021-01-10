@@ -56,18 +56,18 @@ a, a:hover, a:focus, a:active {
 
 .profile-component {
   display: flex;
-  flex-direction: column;
-  margin: 50px; }
+  margin-top: 100px; }
 
 .person-image {
   text-align: center; }
   .person-image__img {
-    border-radius: 10rem;
-    width: 10rem;
-    height: 10rem; }
+    border-radius: 50%;
+    width: 25rem;
+    height: 25rem;
+    margin: 10px 20px 0 0; }
   .person-image__icon {
     transform: translateY(-4rem);
-    margin-left: 7.2rem; }
+    margin-left: 4.2rem; }
     .person-image__icon-background {
       background-color: blue;
       border: 2px solid white;

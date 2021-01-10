@@ -42,9 +42,6 @@ const Card = (props) => {
             Email: {user.email}
           </Typography>
           <Typography className={classes.text}>
-            Date Of Birth: {user.dateOfBirth}
-          </Typography>
-          <Typography className={classes.text}>
             Job Title: {user.jobTitle}
           </Typography>
           <Typography className={classes.text}>

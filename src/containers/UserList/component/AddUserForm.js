@@ -2,17 +2,43 @@ import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import axios from 'axios'
+import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
   button: {
+    fontSize: 15,
     margin: theme.spacing(1),
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    width: 300,
+    // margin: 100,
+  },
+//style for font size
+  resize:{
+    fontSize: 20
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  label: {
+    marginRight: 20
+  },
+  wrapper: {
+    width:'100%',
+    display: "flex",
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 20
+  }
 }));
 
 const AddUserForm = (props) => {
@@ -36,35 +62,52 @@ const AddUserForm = (props) => {
 
   return (
       <Grid container direction="column" justify="center" alignItems="center">
-        <Typography variant="h5">
+        <Typography variant="h2">
           Invite user
         </Typography>
 
-        <TextField id="email" label="Email: " onChange={(event) => {setEmail(event.target.value)}}/>
+        <div className={classes.wrapper}>
+          <h3 className={classes.label}>Email: </h3>
+          <TextField
+              id="email"
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                }
+              }}
+              className={classes.textField}
+              onChange={(event) => {setEmail(event.target.value)}}
+          />
+        </div>
 
-        <FormControlLabel
-            control={
-              <Checkbox checked={isAdmin} onChange={(event) => {setIsAdmin(event.target.checked)}} name="isAdmin" />
-            }
-            label="Admin"
-        />
+        <div className={classes.wrapper}>
+          <h3 className={classes.label}>Admin</h3>
+          <FormControlLabel
+              control={
+                <Checkbox checked={isAdmin} onChange={(event) => {setIsAdmin(event.target.checked)}} name='isAdmin' />
+              }
+              label=''
+          />
+        </div>
 
-        <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-        >
-          Invite user
-        </Button>
-        <Button
-            className={classes.button}
-            variant="contained"
-            color="secondary"
-            onClick={props.closeAction}
-        >
-          Cancel
-        </Button>
+        <div className={classes.footer}>
+          <Button
+              className={classes.button}
+              variant="contained"
+              color="secondary"
+              onClick={props.closeAction}
+          >
+            Cancel
+          </Button>
+          <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+          >
+            Invite user
+          </Button>
+        </div>
       </Grid>
   );
 };
