@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    BrowserRouter,
+    BrowserRouter, Redirect,
     Route,
 } from 'react-router-dom';
 import HomePage from "../../pages/home/HomePage";
@@ -12,7 +12,7 @@ import ProfilePage from "../../pages/profile/ProfilePage";
 import LoginPage from "../../pages/login/LoginPage";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import {withRouter} from "react-router";
+import {withRouter, Switch} from "react-router";
 import {connect} from "react-redux";
 
 const AuthenticationWrapper = withRouter(({ children }) => {
@@ -34,12 +34,15 @@ const convertedComponent = (Component) => (
 const Router = () => {
   return (
       <div className="content">
-          <Route exact path="/" component={() => convertedComponent(HomePage)}/>
-          <Route exact path="/cars" component={() => convertedComponent(CarsPage)}/>
-          <Route exact path="/users" component={() => convertedComponent(UsersPage)}/>
-          <Route exact path="/requests" component={() => convertedComponent(AdminRequests)}/>
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/profile" component={() => convertedComponent(ProfilePage)} />
+          <Switch>
+              <Route exact path="/" component={() => convertedComponent(HomePage)}/>
+              <Route exact path="/cars" component={() => convertedComponent(CarsPage)}/>
+              <Route exact path="/users" component={() => convertedComponent(UsersPage)}/>
+              <Route exact path="/requests" component={() => convertedComponent(AdminRequests)}/>
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/profile" component={() => convertedComponent(ProfilePage)} />
+              <Redirect to="/"/>
+          </Switch>
       </div>
   );
 };

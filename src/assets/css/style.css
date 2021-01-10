@@ -174,7 +174,7 @@ header {
       cursor: pointer;
       transition: border-bottom-color 0.2s;
       font-size: 1.5rem; }
-      header .menu-wrapper .menu-container__item:hover {
+      header .menu-wrapper .menu-container__item:hover, header .menu-wrapper .menu-container__item--active {
         border-bottom: 1px solid #fafafa; }
       header .menu-wrapper .menu-container__item--auth {
         display: flex; }

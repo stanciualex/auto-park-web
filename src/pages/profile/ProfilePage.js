@@ -89,7 +89,7 @@ const ProfilePage = ({user, isAuthenticated, update, upload, file}) => {
                 {isAuthenticated ? (
                     <div className="profile-component">
                         <div className="person-image">
-                            <img src={`${config.API_URL}/file/${file.path}` || image1} className="person-image__img" />
+                            <img src={file && file.path ? `${config.API_URL}/file/${file.path}` : image1} className="person-image__img" />
                             <div className="person-image__icon">
                                 <div className="person-image__icon-background ">
                                     <label htmlFor="upload-profile-picture">
