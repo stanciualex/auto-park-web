@@ -42,7 +42,6 @@ const CarList = (user) => {
         const { value } = event.target;
 
         setSearch(value);
-        applyFilters(cars);
     }
 
     const applyFilters = (cars) => {
