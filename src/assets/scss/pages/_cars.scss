@@ -5,8 +5,8 @@
 }
 
 .carsPageHeader {
-  width: 72%;
   display: flex;
+  min-width: 1265px;
   justify-content: space-between;
   align-items: center;
 }
@@ -19,4 +19,13 @@
 
 .carRequestbutton {
 
+}
+
+.searchCars {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.searchCarsInput {
+  font-size: 20px;
 }

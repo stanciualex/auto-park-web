@@ -85,8 +85,8 @@ a, a:hover, a:focus, a:active {
   height: 70vh; }
 
 .carsPageHeader {
-  width: 72%;
   display: flex;
+  min-width: 1265px;
   justify-content: space-between;
   align-items: center; }
 
@@ -94,6 +94,13 @@ a, a:hover, a:focus, a:active {
   font-size: 60px;
   color: #3f51b5;
   margin-left: 16px; }
+
+.searchCars {
+  width: 50%;
+  margin-top: 20px; }
+
+.searchCarsInput {
+  font-size: 20px; }
 
 .app-container {
   display: flex;

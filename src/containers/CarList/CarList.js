@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useEffect} from 'react'
 import axios from 'axios'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -10,12 +10,12 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import {Search} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import config from '../../config'
-import {useEffect} from 'react'
 
 
 const CarList = (user) => {
 
-    const [cars, setCars] = React.useState();
+    const [cars, setCars] = React.useState([]);
+    const [defaultCars, setDefaultCars] = React.useState([]);
     const [search, setSearch] = React.useState('');
 
     useEffect(() => {
@@ -25,9 +25,10 @@ const CarList = (user) => {
     const getCars = () => {
         axios.get(`${config.API_URL}/cars`)
             .then(response => {
-                setCars(response.data.data)
+                setCars(response.data.data);
+                setDefaultCars(response.data.data);
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error));
     }
 
     const handleDelete = (id) => {
@@ -48,15 +49,13 @@ const CarList = (user) => {
             return [];
         }
 
-        let s = search;
-
-        const sl = s.toLowerCase();
+        const sl = search.toLowerCase()
 
         if (!sl) {
-            return cars;
+            return defaultCars;
         }
 
-        return cars.filter(car => {
+        return defaultCars.filter(car => {
             const searchTerm = `${car.manufacturer} ${car.model} ${car.color} ${car.engine} ${car.licencePlate}`.toLowerCase();
             return searchTerm.includes(sl);
         });
@@ -66,22 +65,23 @@ const CarList = (user) => {
         <Grid container direction="column" justify="center" alignItems="center">
             <div className="carsPageHeader">
                 <h1 className="carsPageTitle">Cars</h1>
+                <TextField
+                    id="input-with-icon-textfield"
+                    placeholder="Search..."
+                    className="searchCars"
+                    InputProps={{
+                      style: { fontSize: 20},
+                      startAdornment: (
+                          <InputAdornment position="start">
+                            <Search/>
+                          </InputAdornment>
+                      ),
+                    }}
+                    onChange={onSearchChange}
+                    value={search}
+                />
                 {user.user.role === 'admin' && <AddCar/>}
             </div>
-
-            <TextField
-                        id="input-with-icon-textfield"
-                        placeholder="Search..."
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search/>
-                                </InputAdornment>
-                            ),
-                        }}
-                        onChange={onSearchChange}
-                        value={search}
-                    />
 
             <Container className="mainContent">
                 {cars && applyFilters(cars).map((car) => <Car key={car.id} content={car} onRemove={handleDelete}/>)}
