@@ -24,5 +24,3 @@ yarn-error.log*
 
 # added by us
 .idea
-/.project
-/.vscode
