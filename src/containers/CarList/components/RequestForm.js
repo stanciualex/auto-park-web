@@ -10,6 +10,7 @@ import Icon from "@material-ui/core/Icon";
 import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/alert';
 import config from '../../../config'
+import { connect } from 'react-redux';
 
 const axios = require('axios').default
 
@@ -60,7 +61,7 @@ const RequestForm = (props) => {
     const submitRequest = () => {
         const request = {
             carId: car.id,
-            userId: '1',
+            userId: props.user.id,
             startDate: selectedStartDate,
             endDate: selectedEndDate,
             details: selectedReason,
@@ -155,4 +156,8 @@ const RequestForm = (props) => {
     )
 }
 
-export default RequestForm;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(RequestForm);

@@ -20,7 +20,7 @@ const CarList = (user) => {
 
     useEffect(() => {
         getCars();
-    })
+    }, [])
 
     const getCars = () => {
         axios.get(`${config.API_URL}/cars`)

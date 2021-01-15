@@ -70,24 +70,9 @@ const waitingStyle = {
     borderLeft: "12px solid grey"
 }
 
-function RentalButton(props) {
-    if ( props.rental.state === "approved" )
-        return (
-            <Button variant="contained" size="large" onClick={() => { disproveOrder(props.rental) }}>
-                Disprove order
-            </Button>
-        );
-    else
-        return (
-            <Button variant="contained" size="large" onClick={() => { approveOrder(props.rental) }}>
-                Approve order
-            </Button>
-        );
-}
-
 function renderRental(rental, index) {
     let rentalStyle = {}
-    let cardTitle = "car with id: " + rental.carId + " by user " + rental.userId;
+    let cardTitle = `car ${rental.car.manufacturer} ${rental.car.model} (${rental.car.licencePlate}) by user ${rental.user.firstName} ${rental.user.lastName}`;
 
     if ( rental.state === 'requested' ) {
         rentalStyle = waitingStyle;
@@ -111,17 +96,36 @@ function renderRental(rental, index) {
 
             <CardContent>
                 <Typography component="h5" variant="h5">
-                    {rental.details}
+                    {`Reason: ${rental.details}`}
                 </Typography>
                 <Typography component="h4" variant="h5">
-                    {rental.startDate}
+                    {`Start date and time: ${new Date(rental.startDate).toLocaleString()}`}
                 </Typography>
                 <Typography component="h4" variant="h5">
-                    {rental.endDate}
+                    {`End date and time: ${new Date(rental.endDate).toLocaleString()}`}
                 </Typography>
             </CardContent>
             <CardContent>
-                <RentalButton rental={rental}></RentalButton>
+                {/*if ( props.rental.state === "approved" )*/}
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    size="large"
+                    onClick={() => { disproveOrder(rental) }}
+                    disabled={rental.state === 'declined'}
+                    style={{ marginRight: 16 }}
+                >
+                    Disapprove order
+                </Button>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    onClick={() => { approveOrder(rental) }}
+                    disabled={rental.state === 'approved'}
+                >
+                    Approve order
+                </Button>
             </CardContent>
         </Card>
     );
