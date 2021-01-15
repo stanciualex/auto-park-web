@@ -22,7 +22,7 @@
   font-weight: bold;
   font-size: 20px !important;
   margin-bottom: 2rem;
-  color: #1877D2;;
+  color: #1877D2;
   padding-bottom: 1.6rem;
 }
 
@@ -44,6 +44,13 @@
 }
 
 .modal-buttons {
+  text-align: center;
+
+  Button {
+    font-size: 2rem;
+    color: #1877D2;;
+  }
+
   &__save-button {
     width: 30%;
     text-align: center;

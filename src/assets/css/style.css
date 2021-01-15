@@ -148,13 +148,17 @@ a, a:hover, a:focus, a:active {
   .modal-content__buy-document {
     color: black; }
 
-.modal-buttons__save-button {
-  width: 30%;
-  text-align: center;
-  margin: unset; }
-
-.modal-buttons__cancel-button {
-  margin-left: 1rem; }
+.modal-buttons {
+  text-align: center; }
+  .modal-buttons Button {
+    font-size: 2rem;
+    color: #1877D2; }
+  .modal-buttons__save-button {
+    width: 30%;
+    text-align: center;
+    margin: unset; }
+  .modal-buttons__cancel-button {
+    margin-left: 1rem; }
 
 header {
   width: 100%;
