@@ -3,6 +3,7 @@ import Card from '@material-ui/core/Card';
 import { Button, CardHeader, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import config from '../../config';
+import { connect } from 'react-redux';
 import AddUser from "../UserList/component/AddUser";
 import Grid from "@material-ui/core/Grid";
 
@@ -17,6 +18,21 @@ async function loadAllRentals(setRentals, setError, setIsLoaded) {
                     setIsLoadedG(true);
                     setRentalsG(result.data);
                 }
+            },
+            (error) => {
+                setIsLoadedG(true);
+                setErrorG(error);
+            }
+        )
+}
+
+async function loadAllRentalsForUser(userId) {
+    fetch(`${globUrl}/userId/${userId}`)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                setIsLoadedG(true);
+                setRentalsG(result || []);
             },
             (error) => {
                 setIsLoadedG(true);
@@ -77,9 +93,9 @@ const waitingStyle = {
     borderLeft: "12px solid #ffd900"
 }
 
-function renderRental(rental, index) {
+function renderRental(rental, index, isAdmin) {
     let rentalStyle = {}
-    let cardTitle = `car ${rental.car.manufacturer} ${rental.car.model} (${rental.car.licencePlate}) by user ${rental.user.firstName} ${rental.user.lastName}`;
+    let cardTitle = `car ${rental.car.manufacturer} ${rental.car.model} (${rental.car.licencePlate}) by user ${rental.user.firstName || ''} ${rental.user.lastName || ''}`;
 
     if ( rental.state === 'requested' ) {
         rentalStyle = waitingStyle;
@@ -112,33 +128,36 @@ function renderRental(rental, index) {
                     {`End date and time: ${new Date(rental.endDate).toLocaleString()}`}
                 </Typography>
             </CardContent>
-            <CardContent>
-                {/*if ( props.rental.state === "approved" )*/}
-                <Button
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    onClick={() => { disproveOrder(rental) }}
-                    disabled={rental.state === 'declined'}
-                    style={{ marginRight: 16 }}
-                >
-                    Disapprove order
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    size="large"
-                    onClick={() => { approveOrder(rental) }}
-                    disabled={rental.state === 'approved'}
-                >
-                    Approve order
-                </Button>
-            </CardContent>
+            {isAdmin && (
+                <CardContent>
+                    <Button
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        onClick={() => { disproveOrder(rental) }}
+                        disabled={rental.state === 'declined'}
+                        style={{ marginRight: 16 }}
+                    >
+                        Disapprove order
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        size="large"
+                        onClick={() => { approveOrder(rental) }}
+                        disabled={rental.state === 'approved'}
+                    >
+                        Approve order
+                    </Button>
+                </CardContent>
+            )}
         </Card>
     );
 }
 
-const AdminRequests = () => {
+const AdminRequests = ({ user }) => {
+    const isAdmin = user.role === 'admin';
+    const pageTitle = isAdmin ? 'Rent requests' : 'My rent requests';
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rentals, setRentals] = useState([]);
@@ -147,14 +166,20 @@ const AdminRequests = () => {
     setRentalsG = setRentals;
 
     useEffect(
-        () => {loadAllRentals(setRentals, setError, setIsLoaded)},
+        () => {
+            if (isAdmin) {
+                loadAllRentals(setRentals, setError, setIsLoaded)
+            } else {
+                loadAllRentalsForUser(user.id);
+            }
+        },
         []);
 
 
     return (
         <div className="rentals">
             <div className="carsPageHeader" style={title}>
-                <h1 className="carsPageTitle">Rent requests</h1>
+                <h1 className="carsPageTitle">{pageTitle}</h1>
                 <div/>
             </div>
             <div style={mainStyle}>
@@ -162,17 +187,17 @@ const AdminRequests = () => {
                 // Render first: rentals with the state 'requested'
                 rentals.filter(rental => rental.state === 'requested').
                 map((rental, index) => {
-                    return renderRental(rental, index);
+                    return renderRental(rental, index, isAdmin);
                 })
                     .concat(
                         rentals.filter(rental => rental.state === 'declined').
                         map((rental, index) => {
-                            return renderRental(rental, index);
+                            return renderRental(rental, index, isAdmin);
                         }))
                     .concat(
                         rentals.filter(rental => rental.state === 'approved').
                         map((rental, index) => {
-                            return renderRental(rental, index);
+                            return renderRental(rental, index, isAdmin);
                         }))
                 }
             </div>
@@ -180,4 +205,8 @@ const AdminRequests = () => {
     );
 }
 
-export default AdminRequests;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(AdminRequests);
