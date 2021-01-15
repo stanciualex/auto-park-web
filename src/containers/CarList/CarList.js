@@ -37,11 +37,16 @@ const CarList = (user) => {
         }).catch(function(error){
             console.log(error);
         })
+        getCars();
     }
 
     const onSearchChange = (event) => {
         setSearch(event.target.value);
         setCars(applyFilters(cars));
+    }
+
+    const onSubmit = () => {
+        getCars();
     }
 
     const applyFilters = (cars) => {
@@ -80,7 +85,7 @@ const CarList = (user) => {
                     onChange={onSearchChange}
                     value={search}
                 />
-                {user.user.role === 'admin' && <AddCar/>}
+                {user.user.role === 'admin' && <AddCar onSubmit={onSubmit}/>}
             </div>
 
             <Container className="mainContent">
