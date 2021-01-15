@@ -10,6 +10,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import {Search} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import config from '../../config'
+import Modal from "../Modal";
 
 
 const CarList = (user) => {
@@ -17,6 +18,7 @@ const CarList = (user) => {
     const [cars, setCars] = React.useState([]);
     const [defaultCars, setDefaultCars] = React.useState([]);
     const [search, setSearch] = React.useState('');
+    const [showPopUp, setShowPopUp] = React.useState(false);
 
     useEffect(() => {
         getCars();
@@ -66,6 +68,11 @@ const CarList = (user) => {
         });
     }
 
+    const openModal = () => {
+        console.log('openModal');
+        setShowPopUp(!showPopUp);
+    }
+
     return(
         <Grid container direction="column" justify="center" alignItems="center">
             <div className="carsPageHeader">
@@ -89,8 +96,17 @@ const CarList = (user) => {
             </div>
 
             <Container className="mainContent">
-                {cars && applyFilters(cars).map((car) => <Car key={car.id} content={car} onRemove={handleDelete}/>)}
+                {cars && applyFilters(cars).map((car) => <Car key={car.id} content={car} onRemove={handleDelete} openModal={openModal}/>)}
             </Container>
+            {
+                showPopUp
+                && (
+                    <Modal
+                        title="Your request has been successfully sent!"
+                        onClose={() => setShowPopUp(false)}
+                    />
+                )
+            }
         </Grid>
     )
 }

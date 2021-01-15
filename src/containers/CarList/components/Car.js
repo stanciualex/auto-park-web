@@ -53,6 +53,7 @@ const Car = (props) => {
 
     const handleClose = () => {
         setOpen(false);
+        props.openModal();
     };
 
     const id = props.content.id;
