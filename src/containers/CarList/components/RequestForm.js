@@ -8,17 +8,12 @@ import '@date-io/date-fns'
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import { makeStyles } from '@material-ui/core/styles';
-<<<<<<< HEAD
-import MuiAlert from '@material-ui/lab/alert';
-import config from '../../../config'
-=======
 import * as https from "https";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import config from '../../../config';
->>>>>>> 5516f76 (save)
 
 const axios = require('axios').default
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import { Button, CardHeader, CardContent, TextField, Box} from '@material-ui/core';
+import { Button, CardHeader, CardContent } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import config from '../../config';
-import Car from '../CarList/components/Car';
-import RentalButton from './components/RentalButton';
+import Container from '@material-ui/core/Container';
 
-const serverUrl = `${config.API_URL}`;
-const rentalsGetAllURL = `${serverUrl}/rentals`;
-const usersGetAllURL = `${serverUrl}/users`;
-const carsGetAllURL = `${serverUrl}/cars`;
+const globUrl = `${config.API_URL}/rentals`;
+const carsUrl = `${config.API_URL}/cars/`;
+const usersUrl = `${config.API_URL}/users/`;
+
 
 
 
@@ -34,48 +34,82 @@ const waitingStyle = {
 }
 
 
+
+
 class AdminRequests extends React.Component {
     constructor(props) {
         super(props);
+
+
         this.state = {
-            cars: {},
             rentals: {},
-            users: {}
+            users: {},
+            cars: {}
         };
     }
 
 
     render () {
         return(
-            <Box>
-            {this.isLoaded &&
-                // render first: rentals with the state 'requested'
-                this.state.rentals.filter(rental => rental.state === 'requested').
-                        map((rental, index) => {
-                            return this.renderRental(rental, index);
-                })
-                .concat(
-                this.state.rentals.filter(rental => rental.state !== 'requested').
-                        map((rental, index) => {
-                            return this.renderRental(rental, index);
-                }))
-            }
-            </Box>
+            <Grid container direction="column" justify="center" alignItems="center">
+                <div className="carsPageHeader">
+                    <h1 className="carsPageTitle">Car rental requests</h1>
+                </div>
+
+                <Container className="mainContent">
+                    <div className="rentals" style={mainStyle}>
+                    {this.isLoaded &&
+                    // Render first: rentals with the state 'requested'
+                            this.state.rentals.filter(rental => rental.state === 'requested' && rental.deleted === false).
+                                    map((rental, index) => {
+                                        return this.renderRental(rental);
+                            })
+                            .concat(
+                            this.state.rentals.filter(rental => rental.state !== 'requested' && rental.deleted === false).
+                                    map((rental, index) => {
+                                        return this.renderRental(rental);
+                            }))
+                    }
+                    </div>
+                </Container>
+            </Grid>
         )
     }
-    loadAllRentals() {
-        console.log("loadAllRentals");
-        fetch(rentalsGetAllURL)
+    async loadAllRentals() {
+            await fetch(globUrl)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    if (result && result.success !== false) {
+                        this.isLoaded = true;
+                        this.setState({
+                            rentals: result.data,
+                            users: this.state.users,
+                            cars: this.state.cars
+                        });
+                    }
+                },
+                (error) => {
+                    this.isLoaded = false;
+                    this.error = error;
+                }
+            );
+    }
+
+    async loadAllUsers() {
+        let url = `${usersUrl}`;
+        
+        await fetch(url)
         .then(res => res.json())
         .then(
             (result) => {
                 if (result && result.success !== false) {
-                    this.isLoaded = true;
+                    this.usersLoaded = true;
                     this.setState({
-                        rentals: result.data
+                        users: result.data,
+                        rentals: this.state.rentals,
+                        cars: this.state.cars
                     });
-                    this.loadCarsDetails();
-                    this.loadUsersDetails();
                 }
             },
             (error) => {
@@ -84,28 +118,32 @@ class AdminRequests extends React.Component {
             }
         );
     }
-    loadUsersDetails() {}
-    loadCarsDetails() {
-        fetch(carsGetAllURL)
+
+    async loadAllCars() {
+        let url = `${carsUrl}`;
+
+        await fetch(url)
         .then(res => res.json())
         .then(
-            (res) => {
-                var cars = {};
-                for ( var i in res.data) {
-                    cars[res.data[i].id] = res.data[i];
+            (result) => {
+                if (result && result.success !== false) {
+                    this.carsLoaded = true;
+                    console.log(result.data);
+                    this.setState({
+                        cars: result.data,
+                        users: this.state.users,
+                        rentals: this.state.rentals
+                    });
                 }
-                this.setState({cars: cars});
-                console.log(res.data.length);
             },
-            (res) => {
-                console.log("Could not load car details");
+            (error) => {
+                this.isLoaded = false;
+                this.error = error;
             }
         );
     }
-
     async updateRental(rental) {
-        // Await is for making sure we update rentals AFTER fetch has completed
-        await fetch(rentalsGetAllURL + '/' + rental.id, {
+        const response = await fetch(globUrl + '/' + rental.id, {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -119,53 +157,74 @@ class AdminRequests extends React.Component {
             body: JSON.stringify(rental) // body data type must match "Content-Type" header
         });
         this.loadAllRentals();
-    }
-<<<<<<< HEAD
-
-
-    return (
-        <Card className="rental" key={rental.id} style={{...rentalStyle, ...cardStyle}}>
-            {/* TODO: Here we should render a separate component that handles car details.. */}
-            <CardHeader title={cardTitle}>
-            </CardHeader>
-
-            <CardContent>
-                <Typography component="h5" variant="h5">
-                    {rental.details}
-                </Typography>
-                <Typography component="h4" variant="h5">
-                    {rental.startDate}
-                </Typography>
-                <Typography component="h4" variant="h5">
-                    {rental.endDate}
-                </Typography>
-            </CardContent>
-            <CardContent>
-                <RentalButton rental={rental}></RentalButton>
-            </CardContent>
-        </Card>
-    );
-}
-=======
->>>>>>> 6fc385e (Refactor)
-
-    componentDidMount() {
-        this.loadAllRentals();
+        return response;
     }
 
-    approveOrder(rental) {
+    async componentDidMount() {
+        await this.loadAllRentals();
+        await this.loadAllUsers();
+        await this.loadAllCars();
+    }
+
+
+    async approveOrder(rental) {
         rental.state = 'approved';
-        this.updateRental(rental);
+        return await this.updateRental(rental);
     }
 
-    disproveOrder(rental) {
+    async disproveOrder(rental) {
         rental.state = 'declined';
-        this.updateRental(rental);
+        return await this.updateRental(rental);
     }
-    renderRental(rental, index) {
-        console.log("renderRental");
+
+
+    get_user(id) {
+        if (!this.usersLoaded)
+            return {name: "UserNotFound"};
+
+        for ( let user of this.state.users ) {
+            console.log(user);
+            if ( user.id === id )
+                return user;
+        }
+
+        return {name: "UserNotFound"};
+    }
+
+    get_car(id) {
+        if (!this.carsLoaded)
+            return {manufacturer: "NotFound", model: "NotFound"};
+        for ( let car of this.state.cars) {
+            if ( car.id === id ) 
+                return car;
+        }
+
+        return {manufacturer: "NotFound", model: "NotFound"};
+    }
+
+    formatDate(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+    }
+
+    renderRental(rental) {
+        let car = this.get_car(rental.carId);
+        let user = this.get_user(rental.userId);
+        const carPicture = car.image
+        ? car.image
+        : "https://ci.catcar.info/opel_2015_05/data/NO_IMAGE12.jpg";
+
         let rentalStyle = {}
-        let cardTitle = "car with id: " + rental.carId + " by user " + rental.userId;
+        let cardTitle = `${car.manufacturer} ${car.model} by user ${user.name}`;
+
+        let startDate = this.formatDate(new Date(Date.parse(rental.startDate)));
+        let endDate = this.formatDate(new Date(Date.parse(rental.endDate)));
 
         if ( rental.state === 'requested' ) {
             rentalStyle = waitingStyle;
@@ -179,17 +238,8 @@ class AdminRequests extends React.Component {
             rentalStyle = rejectedStyle;
             cardTitle = "Declined rental for " + cardTitle;
         }
+        
 
-        var carDetails = <div>Loading car details...</div>;
-        
-        if ( rental.carId in this.state.cars )
-            carDetails = <Car key={rental.carId} content={this.state.cars[rental.carId]}/>;
-        
-        let startDate = rental.startDate.split('T')[0];
-        let startTime = rental.startDate.split('T')[1].substring(0, 5);
-        let endDate = rental.endDate.split('T')[0];
-        let endTime = rental.endDate.split('T')[1].substring(0, 5);
-        
         return (
             <Card className="rental" key={rental.id} style={{...rentalStyle, ...cardStyle}}>
                 {/* TODO: Here we should render a separate component that handles car details.. */}
@@ -197,57 +247,57 @@ class AdminRequests extends React.Component {
                 </CardHeader>
 
                 <CardContent>
-                        <CardContent>
-                            {carDetails}
-                        </CardContent>
-                    <Card>
-                        <CardHeader>Rental Details</CardHeader>
-                            {rental.details}
-                    </Card>
-                    <Card style={{padding: 10 + 'px'}} >
-                        <TextField
-                            label="Start Date"
-                            type="date"
-                            defaultValue={startDate}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <TextField
-                            label="Start Time"
-                            type="time"
-                            defaultValue={startTime}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <br/>
-                        <TextField
-                            label="End Date"
-                            type="date"
-                            defaultValue={endDate}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <TextField
-                            label="End Time"
-                            type="time"
-                            defaultValue={endTime}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </Card>
+                    <img className="imag" src={carPicture} width="160" height="80" alt="car_photo"/>
+                    <Typography component="h1" variant="h4">
+                        Details for the rental request:
+                    </Typography>
+
+
+                    <Typography component="h5" variant="h5">
+                        {rental.details}
+                    </Typography>
+
+                    <br></br>
+                    <Typography component="h1" variant="h4">
+                        Period for which the rental is requested:
+                    </Typography>
+                    <Typography component="h4" variant="h5">
+                        {startDate}
+                    </Typography>
+                    <Typography component="h4" variant="h5">
+                        {endDate}
+                    </Typography>
                 </CardContent>
                 <CardContent>
-                    <RentalButton
-                        rental={rental}
-                        approveOrder={ (rental) => { this.approveOrder(rental); } }
-                        disproveOrder={ (rental) => { this.disproveOrder(rental); } }/>
+                    {this.rentalButton(rental)}
                 </CardContent>
             </Card>
         );
+    }
+    rentalButton(rental) {
+        if ( rental.state === "approved" )
+            return (
+                <Button variant="contained" size="large" onClick={() => { this.disproveOrder(rental) }}>
+                    Disprove order
+                </Button>
+            );
+        if ( rental.state == "declined" )
+            return (
+                <Button variant="contained" size="large" onClick={() => { this.approveOrder(rental) }}>
+                    Approve order
+                </Button>
+            );
+        if ( rental.state == "requested" )
+            return (
+                <div>
+                    <Button variant="contained" size="large" onClick={() => { this.disproveOrder(rental) }}>
+                        Disprove order
+                    </Button>
+                    <Button variant="contained" size="large" onClick={() => { this.approveOrder(rental) }}>
+                        Approve order
+                    </Button>
+                </div>
+            );
     }
 }
 
