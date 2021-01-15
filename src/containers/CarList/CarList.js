@@ -42,6 +42,10 @@ const CarList = (user) => {
         getCars();
     }
 
+    const handleModify = () => {
+        getCars();
+    }
+
     const onSearchChange = (event) => {
         setSearch(event.target.value);
         setCars(applyFilters(cars));
@@ -69,7 +73,6 @@ const CarList = (user) => {
     }
 
     const openModal = () => {
-        console.log('openModal');
         setShowPopUp(!showPopUp);
     }
 
@@ -96,7 +99,13 @@ const CarList = (user) => {
             </div>
 
             <Container className="mainContent">
-                {cars && applyFilters(cars).map((car) => <Car key={car.id} content={car} onRemove={handleDelete} openModal={openModal}/>)}
+                {cars && applyFilters(cars).map((car) => <Car
+                    key={car.id}
+                    content={car}
+                    onRemove={handleDelete}
+                    openModal={openModal}
+                    onModify={handleModify}
+                />)}
             </Container>
             {
                 showPopUp

@@ -15,6 +15,7 @@ import '@date-io/date-fns'
 import Grid from "@material-ui/core/Grid";
 import config from '../../../config';
 import {connect} from "react-redux";
+import EditCar from './EditCar'
 
 const axios = require('axios').default
 
@@ -80,6 +81,7 @@ const Car = (props) => {
                         <CarCard content={car} />
                         {props.user.role === 'user' && <Button variant="contained" color="primary" style={{ fontSize: '15px' }} onClick={handleOpen}>Send request</Button>}
                         {props.user.role === 'admin' && <Button variant="contained" color="secondary" style={{fontSize: '15px'}} onClick={() => props.onRemove(car.id)}>Delete car</Button>}
+                        {props.user.role === 'admin' && <EditCar onModify={() => props.onModify()} content={car}/>}
                     </Grid>
                     <Modal className={classes.modal} open={open} onClose={handleClose} closeAfterTransition
                            BackdropComponent={Backdrop} BackdropProps={{timeout: 500,}}>
