@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -49,6 +49,26 @@ const RequestForm = (props) => {
     const [selectedStartDate, setSelectedStartDate] = React.useState(Date.now());
     const [selectedEndDate, setSelectedEndDate] = React.useState(Date.now())
     const [selectedReason, setSelectedReason] = React.useState(null)
+    const [loading, setLoading] = React.useState(false);
+    const [otherRentals, setOtherRentals] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        getRentalsForCurrentCar(car.id);
+    }, []);
+
+    const getRentalsForCurrentCar = (id) => {
+        axios.get(`${config.API_URL}/rentals/carId/${id}`)
+            .then(response => {
+                console.log('response', response);
+                setOtherRentals(response.data || []);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setLoading(false);
+            });
+    }
 
     const handleStartDateChange = (date) => {
         setSelectedStartDate(date)
@@ -76,6 +96,21 @@ const RequestForm = (props) => {
         })
     }
 
+    const shouldDisableDate = (date) => {
+        return !!otherRentals.find(rental => {
+            const start = new Date(rental.startDate);
+            start.setHours(0, 0, 0, 0);
+            const end = new Date(rental.endDate);
+            end.setHours(0, 0, 0, 0);
+
+            return start <= date && date <= end;
+        })
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return(
         <div>
             <Grid container direction="column" justify="center" alignItems="center">
@@ -96,6 +131,7 @@ const RequestForm = (props) => {
                                     input: classes.resize,
                                 }
                             }}
+                            shouldDisableDate={shouldDisableDate}
                         />
                     </div>
 
@@ -113,6 +149,7 @@ const RequestForm = (props) => {
                                     input: classes.resize,
                                 }
                             }}
+                            shouldDisableDate={shouldDisableDate}
                         />
                     </div>
                 </MuiPickersUtilsProvider>

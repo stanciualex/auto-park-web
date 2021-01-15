@@ -77,7 +77,6 @@ const AddCarForm = (props) => {
             deleted: false,
             engine: engine,
             fabricationDate: fabricationDate,
-            image: image,
             insuranceValability: insuranceDate,
             itpValability: itpDate,
             licencePlate: licensePlate,

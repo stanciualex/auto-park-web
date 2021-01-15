@@ -67,7 +67,7 @@ const acceptedStyle = {
     borderLeft: "12px solid green"
 }
 const waitingStyle = {
-    borderLeft: "12px solid grey"
+    borderLeft: "12px solid #ffd900"
 }
 
 function renderRental(rental, index) {
