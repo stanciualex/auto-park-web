@@ -3,6 +3,8 @@ import Card from '@material-ui/core/Card';
 import { Button, CardHeader, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import config from '../../config';
+import AddUser from "../UserList/component/AddUser";
+import Grid from "@material-ui/core/Grid";
 
 const globUrl = `${config.API_URL}/rentals`;
 let setRentalsG, setErrorG, setIsLoadedG;
@@ -53,7 +55,12 @@ async function updateRental(rental) {
 const mainStyle = {
     padding: "1em",
     overflow: 'scroll',
-    height: '70vh'
+    height: '70vh',
+    margin: '0 13%'
+}
+
+const title = {
+    margin: '0 13%'
 }
 
 const cardStyle = {
@@ -145,19 +152,30 @@ const AdminRequests = () => {
 
 
     return (
-        <div className="rentals" style={mainStyle}>
-        {isLoaded &&
-        // Render first: rentals with the state 'requested'
+        <div className="rentals">
+            <div className="carsPageHeader" style={title}>
+                <h1 className="carsPageTitle">Rent requests</h1>
+                <div/>
+            </div>
+            <div style={mainStyle}>
+                {isLoaded &&
+                // Render first: rentals with the state 'requested'
                 rentals.filter(rental => rental.state === 'requested').
-                        map((rental, index) => {
-                            return renderRental(rental, index);
+                map((rental, index) => {
+                    return renderRental(rental, index);
                 })
-                .concat(
-                rentals.filter(rental => rental.state !== 'requested').
+                    .concat(
+                        rentals.filter(rental => rental.state === 'declined').
                         map((rental, index) => {
                             return renderRental(rental, index);
-                }))
-        }
+                        }))
+                    .concat(
+                        rentals.filter(rental => rental.state === 'approved').
+                        map((rental, index) => {
+                            return renderRental(rental, index);
+                        }))
+                }
+            </div>
         </div>
     );
 }
