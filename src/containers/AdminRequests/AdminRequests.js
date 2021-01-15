@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import { Button, CardHeader, CardContent, TextField, Container} from '@material-ui/core';
+import { Button, CardHeader, CardContent, TextField, Box} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import config from '../../config';
 import Car from '../CarList/components/Car';
-import { makeStyles } from '@material-ui/core/styles';
+import RentalButton from './components/RentalButton';
 
 const serverUrl = `${config.API_URL}`;
 const rentalsGetAllURL = `${serverUrl}/rentals`;
@@ -40,48 +40,49 @@ class AdminRequests extends React.Component {
         this.state = {
             cars: {},
             rentals: {},
-            
+            users: {}
         };
     }
 
 
     render () {
         return(
-            <div className="rentals" style={mainStyle}>
+            <Box>
             {this.isLoaded &&
-            // Render first: rentals with the state 'requested'
-                    this.state.rentals.filter(rental => rental.state === 'requested').
-                            map((rental, index) => {
-                                return this.renderRental(rental, index);
-                    })
-                    .concat(
-                    this.state.rentals.filter(rental => rental.state !== 'requested').
-                            map((rental, index) => {
-                                return this.renderRental(rental, index);
-                    }))
+                // render first: rentals with the state 'requested'
+                this.state.rentals.filter(rental => rental.state === 'requested').
+                        map((rental, index) => {
+                            return this.renderRental(rental, index);
+                })
+                .concat(
+                this.state.rentals.filter(rental => rental.state !== 'requested').
+                        map((rental, index) => {
+                            return this.renderRental(rental, index);
+                }))
             }
-            </div>
+            </Box>
         )
     }
-    async loadAllRentals() {
-            fetch(rentalsGetAllURL)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    if (result && result.success !== false) {
-                        this.isLoaded = true;
-                        this.setState({
-                            rentals: result.data
-                        });
-                        this.loadCarsDetails();
-                        this.loadUsersDetails();
-                    }
-                },
-                (error) => {
-                    this.isLoaded = false;
-                    this.error = error;
+    loadAllRentals() {
+        console.log("loadAllRentals");
+        fetch(rentalsGetAllURL)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                if (result && result.success !== false) {
+                    this.isLoaded = true;
+                    this.setState({
+                        rentals: result.data
+                    });
+                    this.loadCarsDetails();
+                    this.loadUsersDetails();
                 }
-            );
+            },
+            (error) => {
+                this.isLoaded = false;
+                this.error = error;
+            }
+        );
     }
     loadUsersDetails() {}
     loadCarsDetails() {
@@ -92,8 +93,9 @@ class AdminRequests extends React.Component {
                 var cars = {};
                 for ( var i in res.data) {
                     cars[res.data[i].id] = res.data[i];
-                    this.setState({cars: cars});
                 }
+                this.setState({cars: cars});
+                console.log(res.data.length);
             },
             (res) => {
                 console.log("Could not load car details");
@@ -102,7 +104,8 @@ class AdminRequests extends React.Component {
     }
 
     async updateRental(rental) {
-        const response = await fetch(rentalsGetAllURL + '/' + rental.id, {
+        // Await is for making sure we update rentals AFTER fetch has completed
+        await fetch(rentalsGetAllURL + '/' + rental.id, {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -116,7 +119,6 @@ class AdminRequests extends React.Component {
             body: JSON.stringify(rental) // body data type must match "Content-Type" header
         });
         this.loadAllRentals();
-        return response;
     }
 <<<<<<< HEAD
 
@@ -151,16 +153,17 @@ class AdminRequests extends React.Component {
         this.loadAllRentals();
     }
 
-    async approveOrder(rental) {
+    approveOrder(rental) {
         rental.state = 'approved';
-        return await this.updateRental(rental);
+        this.updateRental(rental);
     }
 
-    async disproveOrder(rental) {
+    disproveOrder(rental) {
         rental.state = 'declined';
-        return await this.updateRental(rental);
+        this.updateRental(rental);
     }
     renderRental(rental, index) {
+        console.log("renderRental");
         let rentalStyle = {}
         let cardTitle = "car with id: " + rental.carId + " by user " + rental.userId;
 
@@ -238,24 +241,13 @@ class AdminRequests extends React.Component {
                     </Card>
                 </CardContent>
                 <CardContent>
-                    {this.rentalButton(rental)}
+                    <RentalButton
+                        rental={rental}
+                        approveOrder={ (rental) => { this.approveOrder(rental); } }
+                        disproveOrder={ (rental) => { this.disproveOrder(rental); } }/>
                 </CardContent>
             </Card>
         );
-    }
-    rentalButton(rental) {
-        if ( rental.state === "approved" )
-            return (
-                <Button variant="contained" size="large" onClick={() => { this.disproveOrder(rental) }}>
-                    Disprove order
-                </Button>
-            );
-        else
-            return (
-                <Button variant="contained" size="large" onClick={() => { this.approveOrder(rental) }}>
-                    Approve order
-                </Button>
-            );
     }
 }
 
