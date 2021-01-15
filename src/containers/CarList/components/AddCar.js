@@ -47,6 +47,7 @@ const AddCar = (user) => {
 
     const handleClose = () => {
         setOpen(false);
+        user.onSubmit();
     };
 
     return(
